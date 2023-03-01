@@ -1,46 +1,46 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 
-namespace CosmicApi.Extensions
+namespace CosmicApi.Configurations
 {
     public static class SwaggerConfiguration
     {
+        public interface IGuid { }
         public static IServiceCollection AddSwaggerConfig(this IServiceCollection services)
         {
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1",
+                options.SwaggerDoc("v1",
                     new OpenApiInfo
                     {
                         Title = "Cosmic.Api",
                         Version = "v1",
                         Contact = new OpenApiContact
                         {
-                            Name = "",
-                            Url = new Uri("")
+                            Name = "mohammed0xff",
+                            //Url = new Uri("")
                         },
                         License = new OpenApiLicense
                         {
                             Name = "MIT",
-                            Url = new Uri("")
+                            //Url = new Uri("")
                         }
                     });
-                c.DescribeAllParametersInCamelCase();
-                c.OrderActionsBy(x => x.RelativePath);
+                options.DescribeAllParametersInCamelCase();
+                options.OrderActionsBy(x => x.RelativePath);
 
                 var xmlfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlfile);
                 if (File.Exists(xmlPath))
                 {
-                    c.IncludeXmlComments(xmlPath);
+                    options.IncludeXmlComments(xmlPath);
                 }
-
-                c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-                c.OperationFilter<SecurityRequirementsOperationFilter>();
-
+                options.CustomSchemaIds(type => type.ToString());
             });
 
             return services;
@@ -49,12 +49,12 @@ namespace CosmicApi.Extensions
         public static IApplicationBuilder UseSwaggerConfig(this IApplicationBuilder app)
         {
             app.UseSwagger()
-                .UseSwaggerUI(c =>
+                .UseSwaggerUI(options =>
                 {
-                    c.DisplayRequestDuration();
-                    c.DocExpansion(DocExpansion.List);
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    c.RoutePrefix = "api-docs";
+                    options.DisplayRequestDuration();
+                    options.DocExpansion(DocExpansion.List);
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.RoutePrefix = "swagger";
                 });
 
             return app;
