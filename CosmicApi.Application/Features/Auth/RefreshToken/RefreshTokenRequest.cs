@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CosmicApi.Application.Features.Auth.RefreshToken
 {
-    public class RefreshTokenRequest :IRequest<Result<Jwt>>
+    public record RefreshTokenRequest :IRequest<Result<Jwt>>
     {
         public RefreshTokenRequest(string token) => Token = token;
 
