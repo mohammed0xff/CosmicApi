@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using CosmicApi.Application.Features.Auth.Authenticate;
 using CosmicApi.Application.Features.Auth.RefreshToken;
 using CosmicApi.Application.Features.Auth.Signup;
-using CosmicApi.Extensions;
+using CosmicApi.Application.Extensions;
 
 namespace CosmicApi.Controllers
 {
