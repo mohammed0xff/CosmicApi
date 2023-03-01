@@ -10,7 +10,7 @@ using CosmicApi.Infrastructure.Context;
 using Ardalis.Result;
 
 
-namespace CosmicApi.Infrastructure.Services
+namespace CosmicApi.Infrastructure.Services.TokenService
 {
     public class JwtService : ITokenService
     {
@@ -50,7 +50,7 @@ namespace CosmicApi.Infrastructure.Services
                 Subject = claims,
                 Expires = expiryDate,
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key), 
+                    new SymmetricSecurityKey(key),
                     _tokenConfiguration.Algorithm
                     ),
             };
@@ -61,7 +61,7 @@ namespace CosmicApi.Infrastructure.Services
             // create refresh token
             var refreshToken = new RefreshToken()
             {
-                UserId = user.Id.ToString(),
+                UserId = user.Id,
                 AddedDate = DateTime.UtcNow,
                 ExpiryDate = DateTime.UtcNow.AddMonths(6),
                 Token = RandomString(35) + Guid.NewGuid()
@@ -70,7 +70,7 @@ namespace CosmicApi.Infrastructure.Services
             // save refresh token 
             await _context.Tokens.AddAsync(refreshToken);
             await _context.SaveChangesAsync();
-            
+
             return new Jwt
             {
                 Token = tokenHandler.WriteToken(token),
@@ -80,35 +80,12 @@ namespace CosmicApi.Infrastructure.Services
         }
 
 
-        public async Task<Result<Jwt>> GenerateRefreshToken(string token)
+        public async Task<Result<Jwt?>> GenerateRefreshToken(string token)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             try
             {
-                // jwt format validation 
-                _tokenValidationParams.ValidateLifetime = false;
-                var tokenInVerification = jwtTokenHandler.ValidateToken(token, _tokenValidationParams, out var validatedToken);
-                _tokenValidationParams.ValidateLifetime = true;
-
-                // encryption algorithm validate 
-                if (validatedToken is JwtSecurityToken jwtSecurityToken)
-                {
-                    var result = jwtSecurityToken.Header.Alg.Equals(_tokenConfiguration.Algorithm, StringComparison.InvariantCultureIgnoreCase);
-                    if (result == false)
-                        return Result.Error("Please try to login again");
-                }
-
-                // expiry date validation
-                var utcExpiryDate = long.Parse(
-                    tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value
-                    );
-
-                var expiryDate = UnixTimeStampToDateTime(utcExpiryDate);
-
-                if (expiryDate < DateTime.UtcNow)
-                {
-                    return Result.Error("Refresh token has expired");
-                }
+                /// todo : extra validation
 
                 // token existence validation
                 var storedToken = await _context.Tokens
@@ -125,8 +102,8 @@ namespace CosmicApi.Infrastructure.Services
 
                 // Generate a new token
                 var user = await _context.Users
-                    .FirstOrDefaultAsync(x => x.Id.ToString() == storedToken.UserId);
-                
+                    .FirstOrDefaultAsync(x => x.Id == storedToken.UserId);
+
                 return Result.Success(await GenerateAccessToken(user!));
             }
             catch (Exception ex)
@@ -134,18 +111,6 @@ namespace CosmicApi.Infrastructure.Services
                 return Result.Error($"Failed to refresh token, {ex.Message}");
             }
         }
-
-
-        // https://stackoverflow.com/a/250400
-        private static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
-        {
-            // Unix timestamp is seconds past epoch
-            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-
-            return dateTime;
-        }
-
 
         private string RandomString(int length)
         {
