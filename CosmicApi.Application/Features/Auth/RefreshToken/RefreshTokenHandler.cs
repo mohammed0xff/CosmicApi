@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using CosmicApi.Infrastructure.Services;
 using Ardalis.Result;
 using CosmicApi.Infrastructure.Common;
-
+using CosmicApi.Infrastructure.Services.TokenService;
 
 namespace CosmicApi.Application.Features.Auth.RefreshToken
 {

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CosmicApi.Infrastructure.Context;
-using CosmicApi.Infrastructure.Services;
 using CosmicApi.Infrastructure.Common;
 using BC = BCrypt.Net.BCrypt;
 using Ardalis.Result;
+using CosmicApi.Infrastructure.Services.TokenService;
 
 namespace CosmicApi.Application.Features.Auth.Authenticate
 {
