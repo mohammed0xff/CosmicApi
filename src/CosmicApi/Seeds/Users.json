@@ -1,0 +1,30 @@
+[
+  {
+    "Id": "269c864e3f2641f780bf7cbcead0c15c",
+    "Username": "user1",
+    "Email": "user1@gmail.com",
+    "Password": "unique-password",
+    "Role": "User"
+  },
+  {
+    "Id": "0b657c92-50f7-49fe-b003-0945dea31ecf",
+    "Username": "user2",
+    "Email": "user2@gmail.com",
+    "Password": "unique-password",
+    "Role": "User"
+  },
+  {
+    "Id": "ba58b1c7-9e65-4934-9fbf-a10452769f08",
+    "Username": "user3",
+    "Email": "user3@gmail.com",
+    "Password": "unique-password",
+    "Role": "User"
+  },
+  {
+    "Id": "4e4b16ee-2178-4889-9717-9cb104ac21df",
+    "Username": "Admin1",
+    "Email": "Admin1@gmail.com",
+    "Password": "unique-password",
+    "Role": "Admin"
+  },
+]

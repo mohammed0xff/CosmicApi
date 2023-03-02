@@ -1,0 +1,44 @@
+[
+  {
+    "Id": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "Name": "Milky Way",
+    "Description": "The Milky Way is the galaxy that includes the Solar System, with the name describing the galaxy's appearance from Earth: a hazy band of light seen in the night sky formed from stars that cannot be individually distinguished by the naked eye.",
+    "Type": 2,
+    "EscapeVelocity": "550 km/s",
+    "AbsoluteMagnitude": "-21",
+    "Age": "13.61 billion years",
+    "Radius": "52,850 light years",
+    "NumberOfStars": "100–500 billion ((1–4)×1011)"
+  },
+  {
+    "Id": "9e666399-7325-44a4-8885-323df7a3677a",
+    "Name": "Andromeda",
+    "Description": "The Andromeda Galaxy, also known as Messier 31, M31, or NGC 224 and originally the Andromeda Nebula, is a barred spiral galaxy with the diameter of about 46.56 kiloparsecs approximately 765 kpc from Earth and the nearest large galaxy to the Milky Way.",
+    "Type": 2,
+    "EscapeVelocity": "0.8×1012 M",
+    "AbsoluteMagnitude": "-21.5",
+    "Age": "10.01 billion years",
+    "Radius": "110,000 light years",
+    "NumberOfStars": "1 trillion"
+  },
+  {
+    "Id": "9d8ec434-0740-4e41-bd15-88e4b0ee1855",
+    "Name": "Black Eye",
+    "Description": "The Black Eye Galaxy is a relatively isolated spiral galaxy 17 million light-years away in the mildly northern constellation of Coma Berenices. It was discovered by Edward Pigott in March 1779, and independently by Johann Elert Bode in April of the same year, as well as by Charles Messier the next year. ",
+    "Type": 2,
+    "AbsoluteMagnitude": "-21.87",
+    "Age": "13.28 billion years",
+    "Radius": "26,481 light years",
+    "NumberOfStars": "100 billion"
+  },
+  {
+    "Id": "009533c4-2f05-442b-80db-1be7cfff71b2",
+    "Name": "Whirlpool",
+    "Description": "The Whirlpool Galaxy, also known as Messier 51a, M51a, and NGC 5194, is an interacting grand-design spiral galaxy with a Seyfert 2 active galactic nucleus. It lies in the constellation Canes Venatici, and was the first galaxy to be classified as a spiral galaxy. Its distance is 31 million light-years from Earth.",
+    "Type": 2,
+    "AbsoluteMagnitude": "8.4",
+    "Age": "400.3 million years",
+    "Radius": "30,000 light years",
+    "NumberOfStars": "100–500 billion ((1–4)×1011)"
+  }
+]

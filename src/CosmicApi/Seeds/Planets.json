@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "2147c732-cb35-4289-94bf-16de6c0fe140",
+    "Name": "Mercury",
+    "Description": "Mercury is the smallest planet in the Solar System and the closest to the Sun. Its orbit around the Sun takes 87.97 Earth days, the shortest of all the Sun's planets.",
+    "NumberOfMoons": 0,
+    "GalaxyId": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "StarId": "74873ad3-05ed-44b7-93e5-13e45e56009c"
+  },
+  {
+    "Id": "8d6649c4-bff5-4687-b445-8381dbae6777",
+    "Name": "Venus",
+    "Description": "Venus is the second planet from the Sun. It is sometimes called Earth's 'sister' or 'twin' planet as it is almost as large and has a similar composition. As an interior planet to Earth, Venus appears in Earth's sky never far from the Sun, either as morning star or evening star.",
+    "NumberOfMoons": 0,
+    "GalaxyId": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "StarId": "74873ad3-05ed-44b7-93e5-13e45e56009c"
+  },
+  {
+    "Id": "e1b7ca41-2b12-4d78-b28c-62aa2d4e814d ",
+    "Name": "Earth",
+    "Description": "Earth is the third planet from the Sun and the only place known in the universe where life has originated and found habitability. While large volumes of water can be found throughout the Solar System, only Earth sustains liquid surface water",
+    "NumberOfMoons": 1,
+    "GalaxyId": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "StarId": "74873ad3-05ed-44b7-93e5-13e45e56009c"
+  },
+  {
+    "Id": "79225eac-d6a3-4f95-ade7-233d1436b83d",
+    "Name": "Mars",
+    "Description": "Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, larger only than Mercury. In the English language, Mars is named for the Roman god of war.",
+    "NumberOfMoons": 2,
+    "GalaxyId": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "StarId": "74873ad3-05ed-44b7-93e5-13e45e56009c"
+  },
+  {
+    "Id": "f4a700ee-b36e-4d0f-9e93-a1bc3a723480",
+    "Name": "Jupiter",
+    "Description": "Jupiter is the fifth planet from the Sun and the largest in the Solar System. It is a gas giant with a mass more than two and a half times that of all the other planets in the Solar System combined, and slightly less than one one-thousandth the mass of the Sun.",
+    "NumberOfMoons": 92,
+    "GalaxyId": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "StarId": "74873ad3-05ed-44b7-93e5-13e45e56009c"
+  },
+  {
+    "Id": "c1b14309-a4cf-443f-b0fd-d69e78668f00",
+    "Name": "Saturn",
+    "Description": "Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter. It is a gas giant with an average radius of about nine and a half times that of Earth. It has only one-eighth the average density of Earth, but is over 95 times more massive.",
+    "NumberOfMoons": 83,
+    "GalaxyId": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "StarId": "74873ad3-05ed-44b7-93e5-13e45e56009c"
+  },
+  {
+    "Id": "d240a894-717e-4654-a29d-c4e4f30c16db",
+    "Name": "Uranus",
+    "Description": "Uranus is the seventh planet from the Sun. It is named after Greek sky deity Uranus, who in Greek mythology is the father of Cronus, a grandfather of Zeus and great-grandfather of Ares. Uranus has the third-largest planetary radius and fourth-largest planetary mass in the Solar System.",
+    "NumberOfMoons": 92,
+    "GalaxyId": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "StarId": "74873ad3-05ed-44b7-93e5-13e45e56009c"
+  },
+  {
+    "Id": "702269c4-60b6-4492-8722-44a9ba6c4de1",
+    "Name": "Uranus",
+    "Description": "Neptune is the eighth planet from the Sun and the farthest known planet in the Solar System. It is the fourth-largest planet in the Solar System by diameter, the third-most-massive planet, and the densest giant planet. It is 17 times the mass of Earth, and slightly more massive than its near-twin Uranus.",
+    "NumberOfMoons": 14,
+    "GalaxyId": "592f6ab8-8f95-4cf2-9183-e8803224aad5",
+    "StarId": "74873ad3-05ed-44b7-93e5-13e45e56009c"
+  }
+]
