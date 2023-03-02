@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 
@@ -10,7 +8,6 @@ namespace CosmicApi.Configurations
 {
     public static class SwaggerConfiguration
     {
-        public interface IGuid { }
         public static IServiceCollection AddSwaggerConfig(this IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
@@ -31,6 +28,7 @@ namespace CosmicApi.Configurations
                             //Url = new Uri("")
                         }
                     });
+
                 options.DescribeAllParametersInCamelCase();
                 options.OrderActionsBy(x => x.RelativePath);
 

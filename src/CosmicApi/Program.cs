@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfig();
 
 builder.Services.AddMediatRConfig();
-builder.Services.AddPersistenceSetup(builder.Configuration);
+builder.Services.ConfigurePersistence(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.Configure<TokenConfiguration>(builder.Configuration.GetSection("TokenConfiguration"));
 builder.Services.ConfigureAuthentication();

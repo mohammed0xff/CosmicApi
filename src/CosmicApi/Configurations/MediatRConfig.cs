@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using CosmicApi.Application.Common.Behaviors;
-using CosmicApi.Application.Common.Handlers;
-using CosmicApi.Application.Common;
 
 namespace CosmicApi.Configurations
 {

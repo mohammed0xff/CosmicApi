@@ -37,10 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Seeds\Galaxies.json" />
     <None Include="Seeds\Pictures.json" />
     <None Include="Seeds\Planets.json" />
