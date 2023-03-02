@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>cbca1cff-e1ef-42c9-8dda-1e6f39b990cf</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Seeds\Galaxies.json" />
+    <Content Remove="Seeds\Pictures.json" />
+    <Content Remove="Seeds\Planets.json" />
+    <Content Remove="Seeds\Stars.json" />
+    <Content Remove="Seeds\Users.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Result" Version="7.0.0" />
+    <PackageReference Include="Automapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
+	<PackageReference Include="Swashbuckle.AspNetCore.swagger" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CosmicApi.Application\CosmicApi.Application.csproj" />
+    <ProjectReference Include="..\CosmicApi.Domain\CosmicApi.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Seeds\Galaxies.json" />
+    <None Include="Seeds\Pictures.json" />
+    <None Include="Seeds\Planets.json" />
+    <None Include="Seeds\Stars.json" />
+    <None Include="Seeds\Users.json" />
+  </ItemGroup>
+
+</Project>

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmicApi", "CosmicApi\CosmicApi.csproj", "{E32B1E49-554D-46C1-8B90-D91F5B779A11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmicApi", "src\CosmicApi\CosmicApi.csproj", "{E32B1E49-554D-46C1-8B90-D91F5B779A11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmicApi.Infrastructure", "CosmicApi.Infrastructure\CosmicApi.Infrastructure.csproj", "{0B6A63FD-A529-425C-B35B-B9852FA526D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmicApi.Infrastructure", "src\CosmicApi.Infrastructure\CosmicApi.Infrastructure.csproj", "{0B6A63FD-A529-425C-B35B-B9852FA526D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmicApi.Domain", "CosmicApi.Domain\CosmicApi.Domain.csproj", "{EFCC999A-BA6C-4CA3-B316-15FDAB63985A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmicApi.Domain", "src\CosmicApi.Domain\CosmicApi.Domain.csproj", "{EFCC999A-BA6C-4CA3-B316-15FDAB63985A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmicApi.Application", "CosmicApi.Application\CosmicApi.Application.csproj", "{8B7161BD-6655-4516-A93F-8539FBB6A91B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmicApi.Application", "src\CosmicApi.Application\CosmicApi.Application.csproj", "{8B7161BD-6655-4516-A93F-8539FBB6A91B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

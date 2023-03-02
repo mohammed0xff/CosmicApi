@@ -96,6 +96,11 @@ namespace CosmicApi.Infrastructure.Services.TokenService
                     return Result.Error("Token does not exist");
                 }
 
+                if(storedToken.ExpiryDate > DateTime.UtcNow)
+                {
+                    return Result.Error("Token have expired already.");
+                }
+
                 // update current token 
                 _context.Tokens.Remove(storedToken);
                 await _context.SaveChangesAsync();

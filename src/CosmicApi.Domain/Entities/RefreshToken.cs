@@ -8,7 +8,7 @@ namespace CosmicApi.Domain.Entities
         public string Token { get; set; }
         public DateTime AddedDate { get; set; } = DateTime.Now;
         public DateTime ExpiryDate { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; } = null!;
     }
 }

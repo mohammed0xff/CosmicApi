@@ -25,7 +25,7 @@ namespace CosmicApi.Application.Features.Auth.Authenticate
                 .FirstOrDefaultAsync(x => x.Email.ToLower() == request.Email.ToLower(), cancellationToken);
             if (user == null || !BC.Verify(request.Password, user.Password))
             {
-                return null;
+                return Result.Unauthorized();
             }
             return await _tokenService.GenerateAccessToken(user);
 

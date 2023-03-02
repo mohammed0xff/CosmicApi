@@ -3,13 +3,11 @@
 
 namespace CosmicApi.Domain.Entities
 {
-    public class Planet : BaseEntity
+    public class Moon : BaseEntity
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public int NumberOfMoons { get; set; }
-        public float Age { get; set; }
-
-        public ICollection<Moon> Moons { get; set; }
+        public Planet Planet { get; set; }
+        public Guid PlanetId { get; set; }
     }
 }
