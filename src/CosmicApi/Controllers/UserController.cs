@@ -10,7 +10,6 @@ using CosmicApi.Domain.Constants;
 
 namespace CosmicApi.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -36,7 +35,7 @@ namespace CosmicApi.Controllers
         public async Task<IActionResult> GetUserById(Guid id)
         {
             var found = await _mediator.Send(new GetUserByIdRequest(id));
-            return found == null ? throw new UserNotFoundException(id) : Ok(found);
+            return found == null ? NotFound() : Ok(found);
         }
 
         [HttpDelete("{id}")]
@@ -45,7 +44,7 @@ namespace CosmicApi.Controllers
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             var deleted = await _mediator.Send(new DeleteUserRequest(id));
-            return deleted ? throw new UserNotFoundException(id) : NoContent();
+            return deleted ? NotFound() : NoContent();
         }
     }
 }
