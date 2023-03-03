@@ -1,6 +1,7 @@
 ﻿using CosmicApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using CosmicApi.Infrastructure.Extensions;
 
 namespace CosmicApi.Infrastructure.Configuration
 {
@@ -8,8 +9,8 @@ namespace CosmicApi.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Galaxy> builder)
         {
-            builder.HasKey(x => x.Id);
-            
+            builder.ConfigureBaseEntity();
+
             builder.Property(x => x.Name).IsRequired().HasMaxLength(80);
 
             // stars

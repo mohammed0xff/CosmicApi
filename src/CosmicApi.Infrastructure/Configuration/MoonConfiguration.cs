@@ -1,4 +1,5 @@
 ﻿using CosmicApi.Domain.Entities;
+using CosmicApi.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,8 @@ namespace CosmicApi.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Moon> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.ConfigureBaseEntity();
+
             builder.Property(x => x.Name).IsRequired().HasMaxLength(80);
 
             builder.HasOne(x => x.Planet)

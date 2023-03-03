@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-
+using CosmicApi.Infrastructure.Extensions;
 
 namespace CosmicApi.Infrastructure.Configuration
 {
@@ -10,7 +10,7 @@ namespace CosmicApi.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<RefreshToken> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.ConfigureBaseEntity();
 
             builder.HasOne(x => x.User)
                 .WithOne(x => x.RefreshToken);
