@@ -11,7 +11,7 @@ using ValidationError = Ardalis.Result.ValidationError;
 namespace CosmicApi.Application.Features.Auth.Signup
 {
 
-    public class SignupHandler : IRequestHandler<SignupRequest, Result<GetUserResponse>>
+    public class SignupHandler : IRequestHandler<SignupRequest, Result<UserResponse>>
     {
         private readonly IContext _context;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace CosmicApi.Application.Features.Auth.Signup
             _mapper = mapper;
             _context = context;
         }
-        public async Task<Result<GetUserResponse>> Handle(SignupRequest request, CancellationToken cancellationToken)
+        public async Task<Result<UserResponse>> Handle(SignupRequest request, CancellationToken cancellationToken)
         {
             var newUser = _mapper.Map<User>(request);
             var validationErrors = new List<ValidationError>();
@@ -48,7 +48,7 @@ namespace CosmicApi.Application.Features.Auth.Signup
             _context.Users.Add(newUser);
             newUser.Password = BC.HashPassword(request.Password);
             await _context.SaveChangesAsync(cancellationToken);
-            return _mapper.Map<GetUserResponse>(newUser);
+            return _mapper.Map<UserResponse>(newUser);
         }
     }
 }

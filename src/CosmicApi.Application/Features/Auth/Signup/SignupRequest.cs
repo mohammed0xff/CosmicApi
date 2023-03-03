@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CosmicApi.Application.Features.Auth.Signup
 {
-    public record SignupRequest : IRequest<Result<GetUserResponse>>
+    public record SignupRequest : IRequest<Result<UserResponse>>
     {
         public string Username { get; init; } = null!;
         public string Email { get; init; } = null!;
