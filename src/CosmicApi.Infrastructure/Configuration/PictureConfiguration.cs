@@ -12,6 +12,8 @@ namespace CosmicApi.Infrastructure.Configuration
             builder.ConfigureBaseEntity();
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(80);
+
+            builder.HasIndex(x => x.Name).IsUnique();
         }
     }
 }
