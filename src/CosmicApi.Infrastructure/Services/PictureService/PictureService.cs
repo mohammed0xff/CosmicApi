@@ -6,7 +6,7 @@ namespace CosmicApi.Infrastructure.Services
 {
     public class PictureService : IPictureService
     {
-        private readonly string _SaveDirectory = "images";
+        private readonly string _saveDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles", "Pictures");
         public Picture? UploadPicture(IFormFile File, string? name = null)
         {
             var allowedExtensions = new List<string>() { ".gif", ".png", ".jpeg", ".jpg" };
@@ -15,11 +15,9 @@ namespace CosmicApi.Infrastructure.Services
                 return null;
 
             var imageId = Guid.NewGuid().ToString();
-            if (!Directory.Exists(_SaveDirectory))
-                Directory.CreateDirectory(_SaveDirectory);
             
             var fileName = imageId + name ?? File.FileName + Path.GetExtension(File.FileName);
-            var diskFilePath = Path.Combine(_SaveDirectory, fileName);
+            var diskFilePath = Path.Combine(_saveDirectoryPath, fileName);
 
             try
             {
