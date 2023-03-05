@@ -9,6 +9,6 @@ namespace CosmicApi.Domain.Entities{
         public string Email { get; set; } 
         public string Password { get; set; }
         public string Role { get; set; }
-        public RefreshToken RefreshToken { get; set; } = null!;
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = null!;
     }
 }

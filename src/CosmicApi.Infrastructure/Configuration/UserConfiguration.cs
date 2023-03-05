@@ -14,9 +14,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Email).IsRequired().HasMaxLength(254);
         builder.Property(x => x.Username).IsRequired().HasMaxLength(60);
 
-        builder.HasOne<RefreshToken>()
-            .WithOne(x => x.User)
-            .HasForeignKey<RefreshToken>(x => x.UserId);
+        builder.HasMany<RefreshToken>()
+            .WithOne(x => x.User);
         
         builder.HasIndex(x => x.Email).IsUnique();
     }

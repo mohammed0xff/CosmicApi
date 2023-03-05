@@ -13,8 +13,9 @@ namespace CosmicApi.Infrastructure.Configuration
             builder.ConfigureBaseEntity();
 
             builder.HasOne(x => x.User)
-                .WithOne(x => x.RefreshToken);
-            
+                .WithMany(x => x.RefreshTokens)
+                .HasForeignKey(x => x.UserId);
+
         }
     }
 }
