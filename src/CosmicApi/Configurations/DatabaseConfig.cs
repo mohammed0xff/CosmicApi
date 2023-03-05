@@ -12,9 +12,9 @@ namespace CosmicApi.Configurations
             await using var context = serviceScope.ServiceProvider
                 .GetRequiredService<ApplicationDbContext>();
 
-            // Ensure db created 
-            await context.Database.EnsureCreatedAsync();
-            
+            // Ensure db created (commented : cause MigrateAsync() throws error if db was already created).
+            // await context.Database.EnsureCreatedAsync();
+
             // if there are no applied migrations .. apply them all
             if (!(await context.Database.GetAppliedMigrationsAsync()).Any())
             {
