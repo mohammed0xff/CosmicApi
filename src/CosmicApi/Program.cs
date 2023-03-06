@@ -1,14 +1,11 @@
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.Extensions.FileProviders;
 using CosmicApi.Api.Configurations;
 using CosmicApi.Application.MappingProfiles;
 using CosmicApi.Configurations;
-using CosmicApi.Infrastructure.Common;
 using CosmicApi.Infrastructure.Services;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Text.Json.Serialization;
-
+using CosmicApi.Infrastructure.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,26 +14,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfig();
 
 builder.Services.AddMediatRConfig();
+// configure persistence
 builder.Services.ConfigurePersistence(builder.Configuration);
+// add automapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
-builder.Services.Configure<TokenConfiguration>(builder.Configuration.GetSection("TokenConfiguration"));
-builder.Services.ConfigureAuthentication();
+// configure authentication
+builder.Services.ConfigureAuthentication(builder.Configuration);
+
 builder.Services.AddTransient<IPictureService, PictureService>();
-
-var key = Encoding.UTF8.GetBytes(builder.Configuration["TokenConfiguration:Secret"]);
-var tokenValidationParams = new TokenValidationParameters
-{
-    ValidateIssuerSigningKey = true,
-    IssuerSigningKey = new SymmetricSecurityKey(key),
-    ValidateIssuer = false,
-    ValidateAudience = false,
-    ValidateLifetime = false,
-    RequireExpirationTime = false,
-    ClockSkew = TimeSpan.Zero,
-
-};
-
-builder.Services.AddSingleton(tokenValidationParams);
 
 builder.Services.Configure<JsonOptions>(options =>
 {
@@ -69,5 +54,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//await app.InitDatabase();
+await app.InitDatabase();
 await app.RunAsync();
