@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CosmicApi.Configurations
 {
-    public static class AuthenticationConfiguration
+    public static class AuthenticationConfig
     {
         public static IServiceCollection ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
         {

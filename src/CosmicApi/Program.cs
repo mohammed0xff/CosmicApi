@@ -20,6 +20,8 @@ builder.Services.ConfigurePersistence(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 // configure authentication
 builder.Services.ConfigureAuthentication(builder.Configuration);
+// configure authorization
+builder.Services.ConfigureAuthorization(builder.Configuration);
 
 builder.Services.AddTransient<IPictureService, PictureService>();
 
