@@ -6,12 +6,12 @@ using MediatR;
 
 namespace CosmicApi.Application.Features.Galaxies.CreateGalaxy
 {
-    public class GetGalaxyeHandler : IRequestHandler<GetGalaxyRequest, PaginatedList<GalaxyResponse>>
+    public class GetGalaxyHandler : IRequestHandler<GetGalaxyRequest, PaginatedList<GalaxyResponse>>
     {
         private readonly IContext _context;
         private readonly IMapper _mapper;
 
-        public GetGalaxyeHandler(IContext context, IMapper mapper)
+        public GetGalaxyHandler(IContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
