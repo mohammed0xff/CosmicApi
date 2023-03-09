@@ -96,7 +96,7 @@ namespace CosmicApi.Infrastructure.Services.TokenService
                     return Result.Error("Token does not exist");
                 }
 
-                if(storedToken.ExpiryDate > DateTime.UtcNow)
+                if(storedToken.ExpiryDate < DateTime.UtcNow)
                 {
                     return Result.Error("Token have expired already.");
                 }
