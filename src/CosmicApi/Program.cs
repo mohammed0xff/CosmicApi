@@ -5,11 +5,16 @@ using CosmicApi.Api.Configurations;
 using CosmicApi.Application.MappingProfiles;
 using CosmicApi.Configurations;
 using CosmicApi.Infrastructure.Services;
-using CosmicApi.Infrastructure.Common;
+using CosmicApi.Api.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers(options =>
+    {
+        options.Filters.Add<ValidationErrorResultFilter>();
+    }).AddValidation();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfig();
 
@@ -56,5 +61,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await app.InitDatabase();
+// await app.InitDatabase();
 await app.RunAsync();
