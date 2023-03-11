@@ -10,8 +10,11 @@ using CosmicApi.Application.Features.Moons.CreateMoon;
 
 namespace CosmicApi.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Moon controller.
+    /// </summary>
     [ApiController]
+    [Route("api/[controller]")]
     public class MoonController : ControllerBase
     {
         public IMediator _mediator;
@@ -20,12 +23,22 @@ namespace CosmicApi.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Get a paginated response of moons.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<PaginatedList<MoonResponse>>> Get([FromQuery] GetMoonRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
 
+        /// <summary>
+        /// Get moon by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(MoonResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MoonResponse), StatusCodes.Status404NotFound)]
@@ -35,6 +48,12 @@ namespace CosmicApi.Controllers
             return result == null ? NotFound() : Ok(result);
         }
 
+        /// <summary>
+        /// Get pictures for a moon by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet("{id}/pictures")]
         [ProducesResponseType(typeof(PaginatedList<PictureResponse>), StatusCodes.Status200OK)]
         public async Task<ActionResult> Pictures([FromRoute] Guid id, [FromQuery] GetPicturesRequest request)
@@ -42,6 +61,11 @@ namespace CosmicApi.Controllers
             return Ok(await _mediator.Send(new GetLuminaryPicturesRequest(request) with { LuminaryId = id }));
         }
 
+        /// <summary>
+        /// Create a new moon.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(MoonResponse), StatusCodes.Status201Created)]
         public async Task<ActionResult> Create([FromBody] CreateMoonRequest request)

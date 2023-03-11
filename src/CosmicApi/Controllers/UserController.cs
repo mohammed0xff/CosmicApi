@@ -10,6 +10,10 @@ using CosmicApi.Domain.Constants;
 
 namespace CosmicApi.Controllers
 {
+    /// <summary>
+    /// User controller.
+    /// </summary>
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -20,6 +24,11 @@ namespace CosmicApi.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Get a paginated response of users.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(PaginatedList<UserResponse>), StatusCodes.Status200OK)]
@@ -28,6 +37,11 @@ namespace CosmicApi.Controllers
             return Ok(await _mediator.Send(request));
         }
 
+        /// <summary>
+        /// Get a user by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -38,6 +52,11 @@ namespace CosmicApi.Controllers
             return found == null ? NotFound() : Ok(found);
         }
 
+        /// <summary>
+        /// Delete a user by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using CosmicApi.Application.Features.Pictures.GetPictures;
+using CosmicApi.Application.Features.Pictures.UploadPicture;
 
 namespace CosmicApi.Controllers
 {
@@ -32,9 +33,9 @@ namespace CosmicApi.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadImage([FromBody] IFormFile file)
+        public async Task<IActionResult> UploadImage([FromBody] UploadPictureRequest request)
         {
-            var res = await _mediator.Send(file);
+            var res = await _mediator.Send(request);
             return res == null ? 
                 Ok(res) : BadRequest("Please try again.");
         }

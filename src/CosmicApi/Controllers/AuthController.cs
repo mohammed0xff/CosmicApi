@@ -7,8 +7,11 @@ using CosmicApi.Application.Extensions;
 
 namespace CosmicApi.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Authentication Controller
+    /// </summary>
     [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
 
@@ -18,14 +21,29 @@ namespace CosmicApi.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Login an existing user 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
             => (await _mediator.Send(request)).ToActionResult();
 
+        /// <summary>
+        /// Signup new user.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("Signup")]
         public async Task<IActionResult> Signup([FromBody] SignupRequest request)
             => (await _mediator.Send(request)).ToActionResult();
 
+        /// <summary>
+        /// Refresh an expired token.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("RefreshToken")]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
             => (await _mediator.Send(request)).ToActionResult();
