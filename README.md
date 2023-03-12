@@ -6,7 +6,8 @@
 
 ## What is this project about? 
 This project sotres and provides pictures for galaxies, planets, stars and pretty much everything in the cosmos.
-⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+
+
 ⠀⠀⠀⠀⠀⠀⠈⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠖⠀⠀⠀⠀⠀<br />
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣄⠀⠀⠀⠀⠀⠀⠀⠔⠀<br />
 ⠀⣷⣶⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀<br />
@@ -21,7 +22,14 @@ This project sotres and provides pictures for galaxies, planets, stars and prett
 ⠀⠛⠛⠋⠉⠉⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠄⠀⠀⠀⠀⠀⠀⠀<br />
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⠀⠐⡀⠀⠀⠀⠀⠀⠀<br />
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀<br />
+## Technologies used :
 
+- 🌠 **[`.NET 7`](https://dotnet.microsoft.com/download)** 
+- 🌠 **[`MediatR`](https://github.com/jbogard/MediatR)**  
+- 🌠 **[`Microsoft.AspNetCore.Authentication.JwtBearer`](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)** - Jwt Authentication and authorization.
+- 🌠 **[`AutoMapper`](https://github.com/AutoMapper/AutoMapper)** - object-object mapper.
+- 🌠 **[`Swagger & Swagger UI`](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)** - for API documentation.
+- 🌠 **[`FluentValidation`](https://github.com/FluentValidation/FluentValidation)** - for request validation.
 
 ## Testing
 an access token is required to access authorized endpoints
