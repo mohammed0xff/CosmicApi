@@ -6,6 +6,7 @@ using CosmicApi.Application.MappingProfiles;
 using CosmicApi.Configurations;
 using CosmicApi.Infrastructure.Services;
 using CosmicApi.Api.Common;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,15 @@ builder.Services.Configure<JsonOptions>(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
+
+// logging 
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
 
 var app = builder.Build();
 
