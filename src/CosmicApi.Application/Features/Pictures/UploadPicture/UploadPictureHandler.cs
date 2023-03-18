@@ -20,7 +20,7 @@ namespace CosmicApi.Application.Features.Pictures.UploadPicture
         }
         public async Task<Result<PictureResponse>> Handle(UploadPictureRequest request, CancellationToken cancellationToken)
         {
-            var uploadedImage = _pictureService.UploadPicture(request.FormFile);
+            var uploadedImage = _pictureService.UploadPicture(request.FormFile, request.Name);
             
             if(uploadedImage.IsSuccess)
             {

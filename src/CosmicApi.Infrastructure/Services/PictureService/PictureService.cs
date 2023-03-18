@@ -8,7 +8,7 @@ namespace CosmicApi.Infrastructure.Services
     public class PictureService : IPictureService
     {
         private readonly string _saveDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles", "Pictures");
-        public PictureService(ILogger logger)
+        public PictureService(ILogger<PictureService> logger)
         {
             _logger= logger;
         }
@@ -21,7 +21,7 @@ namespace CosmicApi.Infrastructure.Services
 
             var imageId = Guid.NewGuid().ToString();
             
-            var fileName = ( name ?? File.FileName ) + imageId + Path.GetExtension(File.FileName);
+            var fileName = ( name?.Replace(" ","-") ?? Path.GetFileNameWithoutExtension(File.FileName) ) + imageId + Path.GetExtension(File.FileName);
             var diskFilePath = Path.Combine(_saveDirectoryPath, fileName);
 
             try

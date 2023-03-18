@@ -21,7 +21,7 @@ namespace CosmicApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("/random")]
+        [HttpGet("random")]
         [ProducesResponseType(typeof(PaginatedList<PictureResponse>), StatusCodes.Status200OK)]
         public async Task<ActionResult<PaginatedList<UserResponse>>> GetRandomImages()
         {
@@ -32,7 +32,7 @@ namespace CosmicApi.Controllers
         [Authorize(Roles=Roles.Admin)]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadImage([FromBody] UploadPictureRequest request)
+        public async Task<IActionResult> UploadImage([FromForm] UploadPictureRequest request)
         {
             var res = await _mediator.Send(request);
             return res.IsSuccess ? 

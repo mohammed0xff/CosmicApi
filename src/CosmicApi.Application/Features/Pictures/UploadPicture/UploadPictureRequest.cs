@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CosmicApi.Application.Features.Pictures.UploadPicture
 {
