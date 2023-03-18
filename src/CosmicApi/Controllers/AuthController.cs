@@ -27,7 +27,7 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        public async Task<IActionResult?> Login([FromBody] LoginRequest request)
             => (await _mediator.Send(request)).ToActionResult();
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("Signup")]
-        public async Task<IActionResult> Signup([FromBody] SignupRequest request)
+        public async Task<IActionResult?> Signup([FromBody] SignupRequest request)
             => (await _mediator.Send(request)).ToActionResult();
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("RefreshToken")]
-        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        public async Task<IActionResult?> RefreshToken([FromBody] RefreshTokenRequest request)
             => (await _mediator.Send(request)).ToActionResult();
 
     }
