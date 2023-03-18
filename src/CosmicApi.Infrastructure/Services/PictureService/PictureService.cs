@@ -1,22 +1,27 @@
-﻿using CosmicApi.Domain.Entities;
+﻿using Ardalis.Result;
+using CosmicApi.Domain.Entities;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.Extensions.Logging;
 
 namespace CosmicApi.Infrastructure.Services
 {
     public class PictureService : IPictureService
     {
         private readonly string _saveDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles", "Pictures");
-        public Picture? UploadPicture(IFormFile File, string? name = null)
+        public PictureService(ILogger logger)
+        {
+            _logger= logger;
+        }
+        private ILogger _logger;
+        public Result<Picture> UploadPicture(IFormFile File, string? name = null)
         {
             var allowedExtensions = new List<string>() { ".gif", ".png", ".jpeg", ".jpg" };
             if (!allowedExtensions.Contains(Path.GetExtension(File.FileName)))
-                // todo : use result.error("File not supported.")
-                return null;
+                return Result.Error("File not supported.");
 
             var imageId = Guid.NewGuid().ToString();
             
-            var fileName = imageId + name ?? File.FileName + Path.GetExtension(File.FileName);
+            var fileName = ( name ?? File.FileName ) + imageId + Path.GetExtension(File.FileName);
             var diskFilePath = Path.Combine(_saveDirectoryPath, fileName);
 
             try
@@ -25,14 +30,13 @@ namespace CosmicApi.Infrastructure.Services
                 File.CopyTo(fileStream);
             }catch(Exception ex)
             {
-                // todo : log ex
-                return null;
+                _logger.LogError($"Uploading picture with filename: {fileName}, Exception: {ex.Message}");
+                return Result.Error("Something went wrong.");
             }
 
-            return new Picture()
-            {
-                Name = fileName,
-            };
+            return Result.Success( 
+                new Picture(){ Name = fileName }
+                );
         }
     }
 }

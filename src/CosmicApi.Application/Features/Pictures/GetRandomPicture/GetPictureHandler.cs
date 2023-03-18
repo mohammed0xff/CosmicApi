@@ -18,7 +18,7 @@ namespace CosmicApi.Application.Features.Pictures.GetPictures
         public async Task<PictureResponse> Handle(GetRandomPicturesRequest request, CancellationToken cancellationToken)
         {
             var picturesCount = await _context.Pictures.CountAsync();
-            if (picturesCount > 0)
+            if (picturesCount == 0)
                 throw new ApplicationException("Database is Empty");
             int randomNumber = Random.Shared.Next(0, picturesCount-1);
             var randomPicture = await _context.Pictures

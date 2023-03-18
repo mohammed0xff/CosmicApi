@@ -12,7 +12,6 @@ using CosmicApi.Application.Features.Pictures.UploadPicture;
 namespace CosmicApi.Controllers
 {
     [ApiController]
-    [Authorize(Roles = Roles.Admin)]
     [Route("api/[controller]")]
     public class PictureController : ControllerBase
     {
@@ -22,7 +21,6 @@ namespace CosmicApi.Controllers
             _mediator = mediator;
         }
 
-        [AllowAnonymous]
         [HttpGet("/random")]
         [ProducesResponseType(typeof(PaginatedList<PictureResponse>), StatusCodes.Status200OK)]
         public async Task<ActionResult<PaginatedList<UserResponse>>> GetRandomImages()
@@ -31,13 +29,14 @@ namespace CosmicApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles=Roles.Admin)]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UploadImage([FromBody] UploadPictureRequest request)
         {
             var res = await _mediator.Send(request);
-            return res == null ? 
-                Ok(res) : BadRequest("Please try again.");
+            return res.IsSuccess ? 
+                Ok(res.Value) : BadRequest(res.Errors);
         }
     }
 }

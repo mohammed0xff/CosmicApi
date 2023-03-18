@@ -11,7 +11,7 @@ namespace CosmicApi.Application.Features.Pictures.GetPictures
     public record GetLuminaryPicturesRequest : GetPicturesRequest
     {
         public GetLuminaryPicturesRequest(GetPicturesRequest request) : base(request) {}
-        public Guid? LuminaryId { get; set; }
+        public Guid LuminaryId { get; set; }
     }
 }
 
