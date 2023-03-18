@@ -25,18 +25,26 @@ namespace CosmicApi.Application.Extensions
             var objectResult = new ObjectResult(errors);
             switch (result.Status)
             {
+                case ResultStatus.Error:
+                    objectResult.StatusCode = 400;
+                    break;
+
                 case ResultStatus.Invalid:
                     var ValidtionErrors = result.ValidationErrors.ToList();
-                    List<string> err = new ();
+                    List<string> ValidtionErrorsStrings = new ();
                     foreach ( var error in ValidtionErrors )
-                        err.Add(error.ErrorMessage);
-                    return new BadRequestObjectResult(err);
+                        ValidtionErrorsStrings.Add(error.ErrorMessage);
+                    return new BadRequestObjectResult(ValidtionErrorsStrings);
+                
                 case ResultStatus.NotFound:
                     return new NotFoundObjectResult(errors);
+                
                 case ResultStatus.Unauthorized:
                     return new UnauthorizedObjectResult(errors);
+                
                 case ResultStatus.Forbidden:
                     return new ObjectResult(errors) { StatusCode = 403 };
+                
                 default:
                     break;
             }
