@@ -47,10 +47,11 @@ builder.Logging.AddSerilog(logger);
 
 var app = builder.Build();
 
-// set BaseUrl value for picture mapping (todo : find better way)
+// set BaseUrl value for picture mapping
 var baseUrl = app.Configuration.GetSection("BaseUrl");
 AppDomain.CurrentDomain.SetData("BaseUrl", baseUrl.Value);
 
+// Configure static files 
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
@@ -71,5 +72,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// await app.InitDatabase();
+await app.InitDatabase(app.Logger);
 await app.RunAsync();

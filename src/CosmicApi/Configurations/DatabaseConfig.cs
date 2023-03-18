@@ -5,8 +5,7 @@ namespace CosmicApi.Configurations
 {
     public static class DatabaseConfigurationExtension
     {
-
-        public static async Task InitDatabase(this IApplicationBuilder app)
+        public static async Task InitDatabase(this IApplicationBuilder app, ILogger logger)
         {
             await using var serviceScope = app.ApplicationServices.CreateAsyncScope();
             await using var context = serviceScope.ServiceProvider
@@ -24,8 +23,8 @@ namespace CosmicApi.Configurations
             // Ensure data seed 
             await context.EnsureSeedDataAsync();
 
-            // logging that later
             var connectionString = context.Database.GetConnectionString();
+            logger.LogInformation($"DB connection string :{connectionString}");
         }
     }
 }
