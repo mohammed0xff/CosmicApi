@@ -10,7 +10,7 @@ namespace CosmicApi.Application.Features.Pictures
 
         [Url]
         public string URL { get; set; }
-        public DateTime? AddedAt { get; set; } = DateTime.Now;
+        public DateTime AddedAt { get; set; }
 
     }
 }
