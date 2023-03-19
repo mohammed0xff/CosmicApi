@@ -1,4 +1,4 @@
-﻿using CosmicApi.Application.Common;
+﻿using CosmicApi.Application.Common.Exceptions;
 using CosmicApi.Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
