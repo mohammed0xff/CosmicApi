@@ -18,12 +18,13 @@ using CosmicApi.Application.Features.Users.GetUserById;
 using CosmicApi.Application.Features.Users;
 using CosmicApi.Application.Features.Users.UpdatePassword;
 using CosmicApi.Application.Common.Session;
+using CosmicApi.UnitTests.Application.Helpers;
 
 namespace CosmicApi.UnitTests.Application.Features.LoginTests
 {
 
     [UnitTest]
-    public class UserTests
+    public class UserTests : FeatureTests
     {
         private IMapper _mapper;
         private List<User> _sourceUsers = new();
@@ -33,17 +34,10 @@ namespace CosmicApi.UnitTests.Application.Features.LoginTests
         private Mock<ISession> _session = new Mock<ISession>();
         public UserTests()
         {
-            if (_mapper == null)
-            {
-                var mappingConfig = new MapperConfiguration(mc =>
-                {
-                    mc.AddProfile(new MappingProfile());
-                });
-                IMapper mapper = mappingConfig.CreateMapper();
-                _mapper = mapper;
-            }
+            _mapper = CreateMapper();
             _user.Email = "email@email.com";
             _user.Password = "password";
+            _sourceUsers.Add(_user);
 
             _sourceUsers.AddRange(
                 new List<User>()
