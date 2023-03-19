@@ -1,7 +1,6 @@
 ﻿using Ardalis.Result;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CosmicApi.Application.Features.Pictures.UploadPicture
 {
@@ -10,5 +9,6 @@ namespace CosmicApi.Application.Features.Pictures.UploadPicture
         public string? Name { get; set; }
         public IFormFile FormFile { get; set; }
         public Guid LuminaryId { get; set; }
+        public string Description { get; set; } = null!;
     }
 }

@@ -26,6 +26,7 @@ namespace CosmicApi.Application.Features.Pictures.UploadPicture
             {
                 var image = uploadedImage.Value;
                 image.LuminaryId = request.LuminaryId;
+                image.Description = request.Description;
                 await _context.Pictures.AddAsync(image, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
 

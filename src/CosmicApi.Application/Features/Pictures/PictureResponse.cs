@@ -7,6 +7,7 @@ namespace CosmicApi.Application.Features.Pictures
     {
         public int? Height { get; set; }
         public int? Width { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Url]
         public string URL { get; set; }

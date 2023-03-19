@@ -8,7 +8,7 @@ namespace CosmicApi.Domain.Entities
         public string Name { get; set; }
         public int? Height { get; set; }
         public int? Width { get; set; }
-        
+        public string Description { get; set; } = string.Empty;
         public DateTime AddedAt { get; set; } = DateTime.Now;
         public Guid LuminaryId { get; set; }
     }

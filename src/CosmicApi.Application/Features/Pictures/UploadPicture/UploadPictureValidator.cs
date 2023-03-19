@@ -8,9 +8,10 @@ public class UploadPictureValidator : AbstractValidator<UploadPictureRequest>
 
     public UploadPictureValidator()
     {
-        RuleFor(x => x.Name)
-            .NotEmpty();
-
-        RuleFor(x => x.FormFile);
+        RuleFor(x => x.FormFile)
+            .NotNull();
+        
+        RuleFor(x => x.LuminaryId)
+            .NotNull();
     }
 }

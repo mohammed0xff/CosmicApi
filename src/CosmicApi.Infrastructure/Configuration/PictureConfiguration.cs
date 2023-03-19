@@ -14,6 +14,10 @@ namespace CosmicApi.Infrastructure.Configuration
             builder.Property(x => x.Name).IsRequired().HasMaxLength(80);
 
             builder.HasIndex(x => x.Name).IsUnique();
+            
+            builder.Property(x => x.Description)
+                .HasMaxLength(500)
+                .IsUnicode();
         }
     }
 }

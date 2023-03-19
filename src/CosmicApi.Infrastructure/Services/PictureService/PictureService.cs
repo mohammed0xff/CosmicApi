@@ -10,7 +10,7 @@ namespace CosmicApi.Infrastructure.Services
         private readonly string _saveDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles", "Pictures");
         public PictureService(ILogger<PictureService> logger)
         {
-            _logger= logger;
+            _logger = logger;
         }
         private ILogger _logger;
         public Result<Picture> UploadPicture(IFormFile File, string? name = null)
