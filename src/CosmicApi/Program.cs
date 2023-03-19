@@ -16,6 +16,8 @@ builder.Services
         options.Filters.Add<ValidationErrorResultFilter>();
     }).AddValidation();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfig();
 
