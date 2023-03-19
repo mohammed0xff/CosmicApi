@@ -7,6 +7,7 @@ using CosmicApi.Application.Features.Users.DeleteUser;
 using CosmicApi.Application.Features.Users.GetUserById;
 using CosmicApi.Application.Features.Users.GetUsers;
 using CosmicApi.Domain.Constants;
+using CosmicApi.Application.Features.Users.UpdatePassword;
 
 namespace CosmicApi.Controllers
 {
@@ -64,6 +65,18 @@ namespace CosmicApi.Controllers
         {
             var deleted = await _mediator.Send(new DeleteUserRequest(id));
             return deleted ? NotFound() : NoContent();
+        }
+        /// <summary>
+        /// Update user password
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("update-password")]
+        [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordRequest request)
+        {
+            return Ok(await _mediator.Send(request));
         }
     }
 }
