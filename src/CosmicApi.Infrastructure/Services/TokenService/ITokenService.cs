@@ -8,6 +8,6 @@ namespace CosmicApi.Infrastructure.Services.TokenService
     public interface ITokenService
     {
         Task<Jwt> GenerateAccessToken(User user);
-        Task<Result<Jwt?>> GenerateRefreshToken(string token);
+        Task<Result<Jwt>> GenerateRefreshToken(string token);
     }
 }

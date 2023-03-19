@@ -9,7 +9,6 @@ using CosmicApi.Infrastructure.Common;
 using CosmicApi.Infrastructure.Context;
 using Ardalis.Result;
 
-
 namespace CosmicApi.Infrastructure.Services.TokenService
 {
     public class JwtService : ITokenService
@@ -37,11 +36,12 @@ namespace CosmicApi.Infrastructure.Services.TokenService
             {
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Role, user.Role)
+                new(ClaimTypes.Role, user.Role),
+                new("username", user.Username)
             });
 
             var expiryDate = DateTime.UtcNow
-                .AddHours(_tokenConfiguration.DurationInDays);
+                .AddMinutes(_tokenConfiguration.DurationInMinutes);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -80,13 +80,11 @@ namespace CosmicApi.Infrastructure.Services.TokenService
         }
 
 
-        public async Task<Result<Jwt?>> GenerateRefreshToken(string token)
+        public async Task<Result<Jwt>> GenerateRefreshToken(string token)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             try
             {
-                /// todo : extra validation
-
                 // token existence validation
                 var storedToken = await _context.Tokens
                     .FirstOrDefaultAsync(x => x.Token == token);
@@ -108,8 +106,10 @@ namespace CosmicApi.Infrastructure.Services.TokenService
                 // Generate a new token
                 var user = await _context.Users
                     .FirstOrDefaultAsync(x => x.Id == storedToken.UserId);
-
-                return Result.Success(await GenerateAccessToken(user!));
+                if (user == null)
+                    throw new ArgumentNullException($"User with Id {storedToken.UserId} has been deleted.");
+                
+                return Result.Success(await GenerateAccessToken(user));
             }
             catch (Exception ex)
             {

@@ -13,10 +13,10 @@ public class ApplicationDbContext : DbContext, IContext
     public DbSet<Star> Stars { get; set; } = null!;
     public DbSet<Planet> Planets { get; set; } = null!;
     public DbSet<Moon> Moons { get; set; } = null!;
-    public DbSet<Picture> Pictures { get; set; }
+    public DbSet<Picture> Pictures { get; set; } = null!;
 
     public DbSet<User> Users { get; set; } = null!;
-    public DbSet<RefreshToken> Tokens { get; set; }
+    public DbSet<RefreshToken> Tokens { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

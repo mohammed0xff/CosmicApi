@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using CosmicApi.Domain.Entities;
-using CosmicApi.Domain.Entities.Enums;
 using CosmicApi.Application.Features.Auth.Signup;
-using CosmicApi.Application.Features.Galaxies.CreateGalaxy;
 using CosmicApi.Application.Features.Galaxies;
+using CosmicApi.Application.Features.Galaxies.CreateGalaxy;
 using CosmicApi.Application.Features.Pictures;
 using CosmicApi.Application.Features.Planets;
 using CosmicApi.Application.Features.Planets.CreatePlanet;
@@ -11,6 +9,8 @@ using CosmicApi.Application.Features.Stars;
 using CosmicApi.Application.Features.Stars.CreateStar;
 using CosmicApi.Application.Features.Users;
 using CosmicApi.Application.Features.Users.UpdatePassword;
+using CosmicApi.Domain.Entities;
+using CosmicApi.Domain.Entities.Enums;
 
 namespace CosmicApi.Application.MappingProfiles
 {
@@ -19,8 +19,8 @@ namespace CosmicApi.Application.MappingProfiles
         private GalaxyType? ParseGalaxyType(string galaxyType)
         {
             object? value = null;
-            return Enum.TryParse(typeof(GalaxyType), galaxyType, out value) ? 
-                (GalaxyType) value : null;
+            return Enum.TryParse(typeof(GalaxyType), galaxyType, out value) ?
+                (GalaxyType)value : null;
         }
 
         public MappingProfile()
@@ -32,10 +32,10 @@ namespace CosmicApi.Application.MappingProfiles
             CreateMap<SignupRequest, User>();
 
             CreateMap<UpdatePasswordRequest, User>();
-            
+
             // Galaxy
             CreateMap<Galaxy, GalaxyResponse>()
-                .ForMember(x => x.Type, 
+                .ForMember(x => x.Type,
                 opt => opt.MapFrom(
                     source => Enum.GetName(source.Type)
                     ));
@@ -44,7 +44,7 @@ namespace CosmicApi.Application.MappingProfiles
                 .ForMember(x => x.Type,
                     opt => opt.MapFrom(source => ParseGalaxyType(source.Type))
                 );
-            
+
             CreateMap<UpdateGalaxyRequest, Galaxy>()
                 .ForMember(x => x.Type,
                     opt => opt.MapFrom(source => ParseGalaxyType(source.Type))
@@ -59,16 +59,16 @@ namespace CosmicApi.Application.MappingProfiles
             CreateMap<Planet, PlanetResponse>();
 
             // picture
-            string address = AppDomain.CurrentDomain.GetData("BaseUrl").ToString();
-            if(address == null)
-                throw new ArgumentNullException(nameof(address));
+            var address = AppDomain.CurrentDomain.GetData("BaseUrl")?.ToString();
+            if (address == null)
+                // throw new ArgumentNullException(nameof(address));
 
-            CreateMap<Picture, PictureResponse>()
-                .ForMember(dest => dest.URL,
-                    opt => opt.MapFrom(
-                        (source) =>  address + "/pictures/" + source.Name    
-                        )
-                );
+                CreateMap<Picture, PictureResponse>()
+                    .ForMember(dest => dest.URL,
+                        opt => opt.MapFrom(
+                            (source) => address + "/pictures/" + source.Name
+                            )
+                    );
 
         }
     }
