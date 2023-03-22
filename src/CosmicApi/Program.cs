@@ -17,10 +17,12 @@ builder.Services
     }).AddValidation();
 
 builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddEndpointsApiExplorer();
+// add swagger
 builder.Services.AddSwaggerConfig();
-
+// add health checks
+builder.Services.AddHealthChecks();
+// add MediatR
 builder.Services.AddMediatRConfig();
 // configure persistence
 builder.Services.ConfigurePersistence(builder.Configuration);
@@ -71,7 +73,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseHealthChecks();
 app.MapControllers();
 
 await app.InitDatabase(app.Logger);
