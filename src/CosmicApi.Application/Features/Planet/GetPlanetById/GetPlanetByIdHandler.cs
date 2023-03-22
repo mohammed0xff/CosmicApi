@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using CosmicApi.Application.Common.Responses;
-using CosmicApi.Application.Extensions;
-using CosmicApi.Application.Features.Planets;
 using CosmicApi.Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +18,12 @@ namespace CosmicApi.Application.Features.Planets
 
         public async Task<PlanetResponse?> Handle(GetPlanetByIdRequest request, CancellationToken cancellationToken)
         {
-            var star = await _context.Stars
+            var planet = await _context.Planets
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
-            if(star == null) { return null; }
+            if(planet == null) { return null; }
             
             return _mapper.Map<PlanetResponse?>(
-                star
+                planet
                 );
         }
     }

@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
 using CosmicApi.Application.Common.Responses;
 using CosmicApi.Application.Extensions;
-using CosmicApi.Application.Features.Pictures;
-using CosmicApi.Application.Features.Planets;
-using CosmicApi.Domain.Entities;
 using CosmicApi.Infrastructure.Context;
 using MediatR;
 
 namespace CosmicApi.Application.Features.Planets
 {
-    public class GetPlnaetHandler : IRequestHandler<GetPlanetRequest, PaginatedList<PlanetResponse>>
+    public class GetPlanetHandler : IRequestHandler<GetPlanetRequest, PaginatedList<PlanetResponse>>
     {
         private readonly IContext _context;
         private readonly IMapper _mapper;
 
-        public GetPlnaetHandler(IContext context, IMapper mapper)
+        public GetPlanetHandler(IContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
