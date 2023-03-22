@@ -129,5 +129,37 @@ namespace CosmicApi.UnitTests.Application.Features.GalaxyTests
             Assert.Null(response);
         }
 
+        [Fact]
+        public async void ShouldReturn_True_WhenGalaxyDeleted()
+        {
+            // Arrange
+            var galaxy = source_galaxies[0];
+            DeleteGalaxyRequest request = new DeleteGalaxyRequest(galaxy.Id);
+
+            DeleteGalaxyHandler handler = new(context.Object, _mapper);
+
+            // Act 
+            var response = await handler.Handle(request, new CancellationToken());
+
+            // Assert
+            Assert.True(response);
+        }
+
+        [Fact]
+        public async void ShouldReturn_True_WhenGalaxyNotfound()
+        {
+            // Arrange
+            var galaxyId = Guid.NewGuid();
+            DeleteGalaxyRequest request = new DeleteGalaxyRequest(galaxyId);
+
+            DeleteGalaxyHandler handler = new(context.Object, _mapper);
+
+            // Act 
+            var response = await handler.Handle(request, new CancellationToken());
+
+            // Assert
+            Assert.False(response);
+        }
+
     }
 }

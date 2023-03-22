@@ -25,9 +25,10 @@ namespace CosmicApi.Application.Features.Galaxies.CreateGalaxy
                 return false;    
             
             _context.Galaxies.Remove(galaxy!);
+            await _context.SaveChangesAsync(cancellationToken);
 
-            return await _context.SaveChangesAsync(cancellationToken) > 0;
-        }
+            return true;
+         }
     }
 
 }
