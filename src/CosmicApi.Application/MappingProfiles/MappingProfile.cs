@@ -2,6 +2,8 @@
 using CosmicApi.Application.Features.Auth.Signup;
 using CosmicApi.Application.Features.Galaxies;
 using CosmicApi.Application.Features.Galaxies.CreateGalaxy;
+using CosmicApi.Application.Features.Moons;
+using CosmicApi.Application.Features.Moons.CreateMoon;
 using CosmicApi.Application.Features.Pictures;
 using CosmicApi.Application.Features.Planets;
 using CosmicApi.Application.Features.Planets.CreatePlanet;
@@ -10,7 +12,6 @@ using CosmicApi.Application.Features.Stars.CreateStar;
 using CosmicApi.Application.Features.Users;
 using CosmicApi.Application.Features.Users.UpdatePassword;
 using CosmicApi.Domain.Entities;
-using CosmicApi.Domain.Entities.Enums;
 
 namespace CosmicApi.Application.MappingProfiles
 {
@@ -51,17 +52,21 @@ namespace CosmicApi.Application.MappingProfiles
             CreateMap<CreatePlanetRequest, Planet>();
             CreateMap<Planet, PlanetResponse>();
 
+            // Moon
+            CreateMap<CreateMoonRequest, Moon>();
+            CreateMap<Moon, MoonResponse>();
+            
             // picture
             var address = AppDomain.CurrentDomain.GetData("BaseUrl")?.ToString();
             if (address == null)
-                // throw new ArgumentNullException(nameof(address));
+                throw new ArgumentNullException(nameof(AppDomain.CurrentDomain));
 
-                CreateMap<Picture, PictureResponse>()
-                    .ForMember(dest => dest.URL,
-                        opt => opt.MapFrom(
-                            (source) => address + "/pictures/" + source.Name
-                            )
-                    );
+            CreateMap<Picture, PictureResponse>()
+                .ForMember(dest => dest.URL,
+                    opt => opt.MapFrom(
+                        (source) => address + "/pictures/" + source.Name
+                        )
+                );
 
         }
     }
