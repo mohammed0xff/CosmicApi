@@ -7,6 +7,8 @@ using CosmicApi.Application.Features.Moons;
 using CosmicApi.Application.Features.Moons.GetMoonById;
 using CosmicApi.Application.Features.Moons.GetMoon;
 using CosmicApi.Application.Features.Moons.CreateMoon;
+using CosmicApi.Domain.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CosmicApi.Controllers
 {
@@ -67,6 +69,7 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(MoonResponse), StatusCodes.Status201Created)]
         public async Task<ActionResult> Create([FromBody] CreateMoonRequest request)
         {

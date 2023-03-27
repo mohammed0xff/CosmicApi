@@ -66,6 +66,7 @@ namespace CosmicApi.Controllers
             var deleted = await _mediator.Send(new DeleteUserRequest(id));
             return deleted ? NotFound() : NoContent();
         }
+
         /// <summary>
         /// Update user password
         /// </summary>

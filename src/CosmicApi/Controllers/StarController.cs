@@ -6,6 +6,8 @@ using CosmicApi.Application.Features.Stars.GetStar;
 using CosmicApi.Application.Features.Stars.CreateStar;
 using CosmicApi.Application.Features.Pictures.GetPictures;
 using CosmicApi.Application.Features.Pictures;
+using CosmicApi.Domain.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CosmicApi.Controllers
 {
@@ -54,6 +56,7 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         public async Task<ActionResult> Create([FromBody] CreateStarRequest request)
         {
             return CreatedAtAction(nameof(GetStarById), await _mediator.Send(request));

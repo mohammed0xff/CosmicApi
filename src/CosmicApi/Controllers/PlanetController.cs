@@ -5,6 +5,8 @@ using CosmicApi.Application.Features.Pictures;
 using CosmicApi.Application.Features.Pictures.GetPictures;
 using CosmicApi.Application.Features.Planets;
 using CosmicApi.Application.Features.Planets.CreatePlanet;
+using CosmicApi.Domain.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CosmicApi.Controllers
 {
@@ -65,6 +67,7 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(PlanetResponse), StatusCodes.Status201Created)]
         public async Task<ActionResult> Create([FromBody] CreatePlanetRequest request)
         {

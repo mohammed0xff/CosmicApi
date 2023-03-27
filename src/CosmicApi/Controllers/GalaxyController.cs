@@ -5,7 +5,8 @@ using CosmicApi.Application.Features.Galaxies;
 using CosmicApi.Application.Features.Galaxies.CreateGalaxy;
 using CosmicApi.Application.Features.Pictures;
 using CosmicApi.Application.Features.Pictures.GetPictures;
-
+using Microsoft.AspNetCore.Authorization;
+using CosmicApi.Domain.Constants;
 
 namespace CosmicApi.Controllers
 {
@@ -64,8 +65,9 @@ namespace CosmicApi.Controllers
         /// Create new galaxy.
         /// </summary>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <returns>201 Created</returns>
         [HttpPost]
+        [Authorize(Roles =Roles.Admin)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status201Created)]
         public async Task<ActionResult> Create([FromBody] CreateGalaxyRequest request)
         {
@@ -76,8 +78,9 @@ namespace CosmicApi.Controllers
         /// Delete a galaxy.
         /// </summary>
         /// <param name="DeleteGalaxyRequest"></param>
-        /// <returns></returns>
+        /// <returns>NoContent</returns>
         [HttpDelete]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Delete([FromBody] DeleteGalaxyRequest request)
@@ -89,8 +92,9 @@ namespace CosmicApi.Controllers
         /// Update a galaxy.
         /// </summary>
         /// <param name="UpdateGalaxyRequest"></param>
-        /// <returns></returns>
+        /// <returns>CreatedAtAction</returns>
         [HttpPut]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Update([FromBody] UpdateGalaxyRequest request)
