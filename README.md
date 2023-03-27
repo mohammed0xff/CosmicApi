@@ -31,6 +31,7 @@ This project sotres and provides pictures and information about galaxies, planet
 - 🌠 **[`Swagger & Swagger UI`](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)** - for API documentation.
 - 🌠 **[`FluentValidation`](https://github.com/FluentValidation/FluentValidation)** - for request validation.
 - 🌠 **[`Serilog.AspNetCore`](https://github.com/serilog/serilog-aspnetcore)** - for diagnostic logging.
+- 🌠 **[`Xunit`](https://github.com/xunit/xunit)** - for unit testing.
 - 🌠 **[`Moq`](https://github.com/moq/moq4)** - for mocking interfaces and classes.
 
 ## Testing
