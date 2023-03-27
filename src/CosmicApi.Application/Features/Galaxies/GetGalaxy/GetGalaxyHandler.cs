@@ -22,7 +22,10 @@ namespace CosmicApi.Application.Features.Galaxies.CreateGalaxy
         {
             GalaxyType? type = Galaxy.TryParseType(request.Type);
             var galaxies = _context.Galaxies
-                .WhereIf(type != null , x => x.Type.Equals(type));
+                .WhereIf(type != null,
+                    x => x.Type.Equals(type))
+                .WhereIf(!string.IsNullOrEmpty(request.Name),
+                    g => g.Name.Contains(request.Name!));
                 
             return await _mapper.ProjectTo<GalaxyResponse>(galaxies)
                 .ToPaginatedListAsync(request.CurrentPage, request.PageSize);
