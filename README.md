@@ -34,6 +34,12 @@ This project sotres and provides pictures and information about galaxies, planet
 - 🌠 **[`Xunit`](https://github.com/xunit/xunit)** - for unit testing.
 - 🌠 **[`Moq`](https://github.com/moq/moq4)** - for mocking interfaces and classes.
 
+## Docker
+1. Run `docker-compose up -d` in the root directory 
+This will start the application as well as sql-server database.
+2. Go to `http://localhost:5000/swagger/index.html`
+to access swagger.
+
 ## Testing
 an access token is required to access authorized endpoints
 to obtain one you can log in with : 
