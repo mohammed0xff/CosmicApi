@@ -8,9 +8,9 @@ namespace CosmicApi.Domain.Entities.Enums
     [JsonConverter(typeof(StringEnumConverter))]
     public enum GalaxyType
     {
-        Other,
-        Elliptical,
-        Spiral,
-        Irregular
+        other,
+        elliptical,
+        spiral,
+        irregular
     }
 }

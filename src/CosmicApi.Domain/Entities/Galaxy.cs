@@ -15,7 +15,7 @@ namespace CosmicApi.Domain.Entities
         public string? Radius { get; set; }
         public string? NumberOfStars { get; set; }
 
-        public GalaxyType Type { get; set; } = GalaxyType.Other;
+        public GalaxyType Type { get; set; } = GalaxyType.other;
 
         public ICollection<Star> Stars { get; set; }
         public ICollection<Planet> Planets { get; set; }

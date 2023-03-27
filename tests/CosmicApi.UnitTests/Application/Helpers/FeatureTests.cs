@@ -8,13 +8,14 @@ namespace CosmicApi.UnitTests.Application.Helpers
     {
         public IMapper CreateMapper()
         {
+            // prevent throwing ArgumentNullException when configuring <Picture , PictureResponse> mapping
+            AppDomain.CurrentDomain.SetData("BaseUrl", "BaseUrl");
+            
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
 
-            // prevent throwing ArgumentNullException when configuring <Picture , PictureResponse> mapping
-            AppDomain.CurrentDomain.SetData("BaseUrl", "");
             return mappingConfig.CreateMapper();
         }
     }

@@ -27,29 +27,29 @@ namespace CosmicApi.UnitTests.Application.Features.GalaxyTests
         {
             _mapper = CreateMapper();
 
-            source_galaxies.Add(new Galaxy() { Name = "SpiralA", Type = GalaxyType.Spiral });
-            source_galaxies.Add(new Galaxy() { Name = "SpiralB", Type = GalaxyType.Spiral });
-            source_galaxies.Add(new Galaxy() { Name = "SpiralC", Type = GalaxyType.Spiral });
-            source_galaxies.Add(new Galaxy() { Name = "SpiralD", Type = GalaxyType.Spiral });
-            source_galaxies.Add(new Galaxy() { Name = "SpiralE", Type = GalaxyType.Spiral });
-            source_galaxies.Add(new Galaxy() { Name = "SpiralF", Type = GalaxyType.Spiral });
-            source_galaxies.Add(new Galaxy() { Name = "SpiralG", Type = GalaxyType.Spiral });
+            source_galaxies.Add(new Galaxy() { Name = "SpiralA", Type = GalaxyType.spiral });
+            source_galaxies.Add(new Galaxy() { Name = "SpiralB", Type = GalaxyType.spiral });
+            source_galaxies.Add(new Galaxy() { Name = "SpiralC", Type = GalaxyType.spiral });
+            source_galaxies.Add(new Galaxy() { Name = "SpiralD", Type = GalaxyType.spiral });
+            source_galaxies.Add(new Galaxy() { Name = "SpiralE", Type = GalaxyType.spiral });
+            source_galaxies.Add(new Galaxy() { Name = "SpiralF", Type = GalaxyType.spiral });
+            source_galaxies.Add(new Galaxy() { Name = "SpiralG", Type = GalaxyType.spiral });
 
-            source_galaxies.Add(new Galaxy() { Name = "IrregularA", Type = GalaxyType.Irregular });
-            source_galaxies.Add(new Galaxy() { Name = "IrregularB", Type = GalaxyType.Irregular });
-            source_galaxies.Add(new Galaxy() { Name = "IrregularC", Type = GalaxyType.Irregular });
-            source_galaxies.Add(new Galaxy() { Name = "IrregularD", Type = GalaxyType.Irregular });
-            source_galaxies.Add(new Galaxy() { Name = "IrregularE", Type = GalaxyType.Irregular });
-            source_galaxies.Add(new Galaxy() { Name = "IrregularF", Type = GalaxyType.Irregular });
-            source_galaxies.Add(new Galaxy() { Name = "IrregularG", Type = GalaxyType.Irregular });
+            source_galaxies.Add(new Galaxy() { Name = "IrregularA", Type = GalaxyType.irregular });
+            source_galaxies.Add(new Galaxy() { Name = "IrregularB", Type = GalaxyType.irregular });
+            source_galaxies.Add(new Galaxy() { Name = "IrregularC", Type = GalaxyType.irregular });
+            source_galaxies.Add(new Galaxy() { Name = "IrregularD", Type = GalaxyType.irregular });
+            source_galaxies.Add(new Galaxy() { Name = "IrregularE", Type = GalaxyType.irregular });
+            source_galaxies.Add(new Galaxy() { Name = "IrregularF", Type = GalaxyType.irregular });
+            source_galaxies.Add(new Galaxy() { Name = "IrregularG", Type = GalaxyType.irregular });
 
-            source_galaxies.Add(new Galaxy() { Name = "OtherA", Type = GalaxyType.Other });
-            source_galaxies.Add(new Galaxy() { Name = "OtherB", Type = GalaxyType.Other });
-            source_galaxies.Add(new Galaxy() { Name = "OtherC", Type = GalaxyType.Other });
-            source_galaxies.Add(new Galaxy() { Name = "OtherD", Type = GalaxyType.Other });
-            source_galaxies.Add(new Galaxy() { Name = "OtherE", Type = GalaxyType.Other });
-            source_galaxies.Add(new Galaxy() { Name = "OtherF", Type = GalaxyType.Other });
-            source_galaxies.Add(new Galaxy() { Name = "OtherG", Type = GalaxyType.Other });
+            source_galaxies.Add(new Galaxy() { Name = "OtherA", Type = GalaxyType.other });
+            source_galaxies.Add(new Galaxy() { Name = "OtherB", Type = GalaxyType.other });
+            source_galaxies.Add(new Galaxy() { Name = "OtherC", Type = GalaxyType.other });
+            source_galaxies.Add(new Galaxy() { Name = "OtherD", Type = GalaxyType.other });
+            source_galaxies.Add(new Galaxy() { Name = "OtherE", Type = GalaxyType.other });
+            source_galaxies.Add(new Galaxy() { Name = "OtherF", Type = GalaxyType.other });
+            source_galaxies.Add(new Galaxy() { Name = "OtherG", Type = GalaxyType.other });
 
             var mockDbsetGalaxies = source_galaxies.AsQueryable().BuildMockDbSet();
 
@@ -161,5 +161,36 @@ namespace CosmicApi.UnitTests.Application.Features.GalaxyTests
             Assert.False(response);
         }
 
+        [Theory]
+        [InlineData("spiral")]
+        [InlineData("Spiral")]
+        [InlineData("SPIRAL")]
+        [InlineData("Elliptical")]
+        [InlineData("Irregular")]
+        [InlineData("Other")]
+        public void ShouldReturn_GalaxyType_WhenValidString(string type)
+        {
+            // Arrange
+            // Act 
+            var res = Galaxy.TryParseType(type);
+            // Assert
+            Assert.NotNull(res);
+            Assert.IsType<GalaxyType>(res);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("1")]
+        [InlineData("65464")]
+        [InlineData("something")]
+        [InlineData("another")]
+        public void ShouldReturn_Null_WhenStringIsntAValidType(string type)
+        {
+            // Arrange
+            // Act 
+            var res = Galaxy.TryParseType(type);
+            // Assert
+            Assert.Null(res);
+        }
     }
 }
