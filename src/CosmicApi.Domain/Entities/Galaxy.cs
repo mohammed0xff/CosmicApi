@@ -21,5 +21,15 @@ namespace CosmicApi.Domain.Entities
         public ICollection<Planet> Planets { get; set; }
         public ICollection<BlackHole> BlackHoles { get; set; }
 
+        public static GalaxyType? TryParseType(string? galaxyType)
+        {
+            // if string is null, empty or numeric return null.
+            if (string.IsNullOrEmpty(galaxyType) || int.TryParse(galaxyType, out int numValue))
+                return null;
+            object? value = null;
+            
+            return Enum.TryParse(typeof(GalaxyType), galaxyType.ToLower(), out value) ?
+                (GalaxyType)value : null;
+        }
     }
 }

@@ -16,13 +16,6 @@ namespace CosmicApi.Application.MappingProfiles
 {
     public class MappingProfile : Profile
     {
-        private GalaxyType? ParseGalaxyType(string galaxyType)
-        {
-            object? value = null;
-            return Enum.TryParse(typeof(GalaxyType), galaxyType, out value) ?
-                (GalaxyType)value : null;
-        }
-
         public MappingProfile()
         {
 
@@ -42,12 +35,12 @@ namespace CosmicApi.Application.MappingProfiles
 
             CreateMap<CreateGalaxyRequest, Galaxy>()
                 .ForMember(x => x.Type,
-                    opt => opt.MapFrom(source => ParseGalaxyType(source.Type))
+                    opt => opt.MapFrom(source => Galaxy.TryParseType(source.Type))
                 );
 
             CreateMap<UpdateGalaxyRequest, Galaxy>()
                 .ForMember(x => x.Type,
-                    opt => opt.MapFrom(source => ParseGalaxyType(source.Type))
+                    opt => opt.MapFrom(source => Galaxy.TryParseType(source.Type))
                 );
 
             // Star

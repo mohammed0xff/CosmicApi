@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /src/CosmicApi.Application/Features/Users/UserNotFound.cs
 /src/CosmicApi/Configurations/ApplicationConfig.cs
+/src/CosmicApi/bugsNissues.txt
