@@ -1,0 +1,34 @@
+version: '3.9'
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  # SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest 
+    container_name: sqlserver
+    hostname: mssql
+    cap_add: [ 'SYS_PTRACE' ]
+    restart: always
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=hP75#q3q
+    networks:
+      - app-network
+
+  # Web API Application
+  cosmic-webapi:
+    image: cosmic-api:local
+    container_name: cosmic-webapi
+    build:
+      context: .
+      dockerfile: src\CosmicApi\Dockerfile
+    depends_on:
+      - "sqlserver"
+    networks:
+      - app-network
+    restart: unless-stopped

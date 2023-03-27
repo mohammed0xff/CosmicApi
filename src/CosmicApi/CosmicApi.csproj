@@ -11,14 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Seeds\Galaxies.json" />
-    <Content Remove="Seeds\Pictures.json" />
-    <Content Remove="Seeds\Planets.json" />
-    <Content Remove="Seeds\Stars.json" />
-    <Content Remove="Seeds\Users.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Properties\launchSettings.json~RF15daba.TMP" />
   </ItemGroup>
 
@@ -46,14 +38,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CosmicApi.Application\CosmicApi.Application.csproj" />
     <ProjectReference Include="..\CosmicApi.Domain\CosmicApi.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Seeds\Galaxies.json" />
-    <None Include="Seeds\Pictures.json" />
-    <None Include="Seeds\Planets.json" />
-    <None Include="Seeds\Stars.json" />
-    <None Include="Seeds\Users.json" />
   </ItemGroup>
 
 </Project>

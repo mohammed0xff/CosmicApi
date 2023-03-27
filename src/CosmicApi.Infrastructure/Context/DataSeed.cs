@@ -5,6 +5,8 @@ using JsonNet.ContractResolvers;
 using System.Text;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace CosmicApi.Infrastructure.Context
 {
@@ -13,15 +15,16 @@ namespace CosmicApi.Infrastructure.Context
         private static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings();
 
         private static readonly string SeedFolderName = "Seeds";
-        private static readonly string CurrentDirectory = Directory.GetCurrentDirectory();
-        private static readonly string FolderPath = Path.Combine(CurrentDirectory, SeedFolderName);
+        private static readonly string RootDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static readonly string FolderPath = Path.Combine(RootDirectory, SeedFolderName);
 
-        public static async Task EnsureSeedDataAsync(this ApplicationDbContext context)
+        public static async Task EnsureSeedDataAsync(this ApplicationDbContext context, ILogger logger)
         {
             if (context == null) throw new ArgumentNullException(nameof(ApplicationDbContext));
 
-            ConfigureJsonSettings(JsonSettings);
+            logger.LogInformation("DataBase Seed Started.");
             
+            ConfigureJsonSettings(JsonSettings);
             ///
             context.ChangeTracker.AutoDetectChangesEnabled = false;
             context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
@@ -44,6 +47,8 @@ namespace CosmicApi.Infrastructure.Context
             context.ChangeTracker.AutoDetectChangesEnabled = true;
             context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
             ///
+
+            logger.LogInformation("DataBase Seed Completed Successfully.");
         }
 
         private static async Task AddEntitiesIfNotExistsAsync<TEntity>(DbContext context, string fileName)

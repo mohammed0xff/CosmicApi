@@ -27,5 +27,23 @@
   <ItemGroup>
     <ProjectReference Include="..\CosmicApi.Domain\CosmicApi.Domain.csproj" />
   </ItemGroup>
-
+	
+	<ItemGroup>
+		<None Update="Seeds\Galaxies.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Seeds\Pictures.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Seeds\Stars.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Seeds\Planets.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Seeds\Users.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	
 </Project>

@@ -10,21 +10,26 @@ namespace CosmicApi.Configurations
             await using var serviceScope = app.ApplicationServices.CreateAsyncScope();
             await using var context = serviceScope.ServiceProvider
                 .GetRequiredService<ApplicationDbContext>();
-
-            // Ensure db created (commented : cause MigrateAsync() throws error if db was already created).
-            // await context.Database.EnsureCreatedAsync();
-
-            // if there are no applied migrations .. apply them all
-            if (!(await context.Database.GetAppliedMigrationsAsync()).Any())
+            
+            if(context == null)
             {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            // Apply migrations if non was applyied.
+            var migrations = await context.Database.GetAppliedMigrationsAsync();
+            if (migrations.Count() == 0)
+            {
+                logger.LogInformation("======= Applying Migrations ===== ");
                 await context.Database.MigrateAsync();
             }
-            
-            // Ensure data seed 
-            await context.EnsureSeedDataAsync();
 
-            var connectionString = context.Database.GetConnectionString();
-            logger.LogInformation($"DB connection string :{connectionString}");
+            // Ensure data seed 
+            await context.EnsureSeedDataAsync(logger);
+            
+            logger.LogInformation(
+                $"DB connection string :{context.Database.GetConnectionString()}"
+                );
         }
     }
 }

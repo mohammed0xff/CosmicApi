@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
-using Microsoft.Extensions.FileProviders;
 using CosmicApi.Api.Configurations;
 using CosmicApi.Application.MappingProfiles;
 using CosmicApi.Configurations;
@@ -56,27 +55,11 @@ var baseUrl = app.Configuration.GetSection("BaseUrl");
 AppDomain.CurrentDomain.SetData("BaseUrl", baseUrl.Value);
 
 // Configure static files 
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-           Path.Combine(builder.Environment.ContentRootPath, "StaticFiles")),
-    RequestPath = ""
-});
+app.UseStaticFiles(builder.Environment);
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwaggerConfig();
-}
-
+app.UseSwaggerConfig();
 app.UseHttpsRedirection();
-app.UseCors(x =>
-{
-    x.AllowAnyMethod()
-        .AllowAnyHeader()
-        .SetIsOriginAllowed((origin) => true)
-        .AllowCredentials();
-});
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHealthChecks();
