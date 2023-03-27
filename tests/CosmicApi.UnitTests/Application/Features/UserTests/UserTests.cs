@@ -112,7 +112,7 @@ namespace CosmicApi.UnitTests.Application.Features.LoginTests
         public async void ShouldReturn_Null_WhenDoestExist()
         {
             // Arrange
-            var userId = _user.Id;
+            var userId = Guid.NewGuid();
             GetUserByIdRequest request = new GetUserByIdRequest(userId);
             GetUserByIdHandler handler = new(_mapper, context.Object);
 

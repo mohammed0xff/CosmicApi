@@ -52,6 +52,7 @@ namespace CosmicApi.UnitTests.Application.Features.LoginTests
 
         }
 
+        // Invalid salt version!
         [Fact]
         public async void ShouldReturn_Success_WhenValidCredentials()
         {         

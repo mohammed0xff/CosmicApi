@@ -61,8 +61,11 @@ namespace CosmicApi.UnitTests.Application.Features.GalaxyTests
         [InlineData(1, 5)]
         [InlineData(1, 10)]
         [InlineData(2, 10)]
-        [InlineData(1, 10, "Other")]
-        [InlineData(1, 10, "Spiral")]
+        [InlineData(1, 10, "other")]
+        [InlineData(1, 10, "OTHER")]
+        [InlineData(1, 10, "OtheR")]
+        [InlineData(1, 10, "spiral")]
+        [InlineData(1, 10, "elliptical")]
         [InlineData(1, 10, "Elliptical")]
         public async void ShouldReturnALlGalaxies(int currentPage, int pageSize, string galaxyType = null)
         {
@@ -88,7 +91,7 @@ namespace CosmicApi.UnitTests.Application.Features.GalaxyTests
             {
                 foreach (var item in response.Result)
                 {
-                    Assert.Equal(item.Type, galaxyType);
+                    Assert.Equal(item.Type, galaxyType.ToLower());
                 }
             }
 
