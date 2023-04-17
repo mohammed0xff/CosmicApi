@@ -27,12 +27,5 @@ public class ApplicationDbContext : DbContext, IContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TokenConfiguration).Assembly);
-
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(GalaxyConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(StarConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PlanetConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(MoonConfiguration).Assembly);
     }
-    
 }
