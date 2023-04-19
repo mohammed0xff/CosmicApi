@@ -6,6 +6,8 @@ using CosmicApi.Configurations;
 using CosmicApi.Infrastructure.Services;
 using CosmicApi.Api.Common;
 using Serilog;
+using CosmicApi.Configurations.Authentication;
+using CosmicApi.Configurations.Authentication.ApiKey;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,7 @@ builder.Services.ConfigureAuthentication(builder.Configuration);
 builder.Services.ConfigureAuthorization(builder.Configuration);
 
 builder.Services.AddTransient<IPictureService, PictureService>();
+builder.Services.AddScoped<IGetApiKeyQuery, InMemoryGetApiKeyQuery>();
 
 builder.Services.Configure<JsonOptions>(options =>
 {
@@ -46,7 +49,6 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
-
 
 var app = builder.Build();
 
