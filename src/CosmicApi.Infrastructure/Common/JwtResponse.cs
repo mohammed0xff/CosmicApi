@@ -1,6 +1,6 @@
 ﻿namespace CosmicApi.Infrastructure.Common
 {
-    public record Jwt
+    public record RefreshTokenResponse
     {
         public string Token { get; init; } = null!;
         public DateTime ExpDate { get; init; }
