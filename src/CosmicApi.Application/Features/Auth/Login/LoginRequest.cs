@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CosmicApi.Application.Features.Auth.Authenticate;
 
-public record LoginRequest : IRequest<Result<Jwt>>
+public record LoginRequest : IRequest<Result<RefreshTokenResponse>>
 {
     public string Email { get; init; } = null!;
     public string Password { get; init; }  = null!;

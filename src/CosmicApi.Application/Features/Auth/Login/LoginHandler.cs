@@ -8,7 +8,7 @@ using CosmicApi.Infrastructure.Services.TokenService;
 
 namespace CosmicApi.Application.Features.Auth.Authenticate
 {
-    public class LoginHandler : IRequestHandler<LoginRequest, Result<Jwt>>
+    public class LoginHandler : IRequestHandler<LoginRequest, Result<RefreshTokenResponse>>
     {
         private readonly IContext _context;
         private readonly ITokenService _tokenService;
@@ -19,7 +19,7 @@ namespace CosmicApi.Application.Features.Auth.Authenticate
             _tokenService = tokenService;
         }
 
-        public async Task<Result<Jwt>> Handle(LoginRequest request, CancellationToken cancellationToken)
+        public async Task<Result<RefreshTokenResponse>> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(x => x.Email.ToLower() == request.Email.ToLower(), cancellationToken);
@@ -27,8 +27,8 @@ namespace CosmicApi.Application.Features.Auth.Authenticate
             {
                 return Result.Error("Username Or Email is incorrect.");
             }
-            return await _tokenService.GenerateAccessToken(user);
 
+            return await _tokenService.GenerateAccessToken(user);
         }
     }
 }

@@ -1,22 +1,12 @@
-﻿using Ardalis.Result;
-using CosmicApi.Application.Common.Responses;
+﻿using MediatR;
+using Ardalis.Result;
 using CosmicApi.Infrastructure.Common;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CosmicApi.Application.Features.Auth.RefreshToken
 {
-    public record RefreshTokenRequest :IRequest<Result<Jwt>>
+    public record RefreshTokenRequest :IRequest<Result<RefreshTokenResponse>>
     {
-        public RefreshTokenRequest(string token) => Token = token;
-
-        [Required]
-        public string Token { get; }
-
+        public string Token { get; init; }
+        public string RefreshToken { get; init; } 
     }
 }
