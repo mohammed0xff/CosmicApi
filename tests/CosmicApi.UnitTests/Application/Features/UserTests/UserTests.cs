@@ -61,7 +61,7 @@ namespace CosmicApi.UnitTests.Application.Features.LoginTests
             context.Setup(x => x.Users).Returns(mockDbsetUsers.Object);
 
             _tokenService.Setup(x => x.GenerateAccessToken(It.IsAny<User>())).ReturnsAsync(
-                new Jwt() { Token = "", ExpDate = DateTime.UtcNow, RefreshToken = "" }
+                new RefreshTokenResponse() { Token = "", ExpDate = DateTime.UtcNow, RefreshToken = "" }
                 );
 
             _session.Setup(x => x.UserId).Returns(_user.Id);
