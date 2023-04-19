@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CosmicApi.Application.Common.Responses;
 using CosmicApi.Application.Features.Users;
 using CosmicApi.Application.Features.Users.DeleteUser;
@@ -31,7 +32,8 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = Roles.Admin)]
         [ProducesResponseType(typeof(PaginatedList<UserResponse>), StatusCodes.Status200OK)]
         public async Task<ActionResult<PaginatedList<UserResponse>>> GetUsers([FromQuery] GetUsersRequest request)
         {
@@ -45,6 +47,8 @@ namespace CosmicApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUserById(Guid id)
@@ -59,7 +63,8 @@ namespace CosmicApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteUser(Guid id)
         {

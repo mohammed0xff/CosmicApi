@@ -47,6 +47,5 @@ namespace CosmicApi.Controllers
         [HttpPost("RefreshToken")]
         public async Task<IActionResult?> RefreshToken([FromBody] RefreshTokenRequest request)
             => (await _mediator.Send(request)).ToActionResult();
-
     }
 }

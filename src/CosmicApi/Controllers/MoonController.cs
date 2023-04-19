@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CosmicApi.Application.Common.Responses;
 using CosmicApi.Application.Features.Pictures.GetPictures;
 using CosmicApi.Application.Features.Pictures;
@@ -8,7 +10,7 @@ using CosmicApi.Application.Features.Moons.GetMoonById;
 using CosmicApi.Application.Features.Moons.GetMoon;
 using CosmicApi.Application.Features.Moons.CreateMoon;
 using CosmicApi.Domain.Constants;
-using Microsoft.AspNetCore.Authorization;
+using CosmicApi.Configurations.Authentication.ApiKey;
 
 namespace CosmicApi.Controllers
 {
@@ -31,6 +33,8 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.DefaultScheme,
+            Roles = Roles.Consumer)]
         public async Task<ActionResult<PaginatedList<MoonResponse>>> Get([FromQuery] GetMoonRequest request)
         {
             return Ok(await _mediator.Send(request));
@@ -42,6 +46,8 @@ namespace CosmicApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.DefaultScheme,
+            Roles = Roles.Consumer)]
         [ProducesResponseType(typeof(MoonResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MoonResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetMoonById([FromRoute] Guid id)
@@ -57,6 +63,8 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("{id}/pictures")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.DefaultScheme,
+            Roles = Roles.Consumer)]
         [ProducesResponseType(typeof(PaginatedList<PictureResponse>), StatusCodes.Status200OK)]
         public async Task<ActionResult> Pictures([FromRoute] Guid id, [FromQuery] GetPicturesRequest request)
         {
@@ -69,7 +77,8 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = Roles.Admin)]
         [ProducesResponseType(typeof(MoonResponse), StatusCodes.Status201Created)]
         public async Task<ActionResult> Create([FromBody] CreateMoonRequest request)
         {

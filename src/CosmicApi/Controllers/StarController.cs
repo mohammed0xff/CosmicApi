@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CosmicApi.Application.Common.Responses;
 using CosmicApi.Application.Features.Stars;
 using CosmicApi.Application.Features.Stars.GetStar;
@@ -8,6 +9,7 @@ using CosmicApi.Application.Features.Pictures.GetPictures;
 using CosmicApi.Application.Features.Pictures;
 using CosmicApi.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
+using CosmicApi.Configurations.Authentication.ApiKey;
 
 namespace CosmicApi.Controllers
 {
@@ -30,6 +32,8 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.DefaultScheme,
+            Roles = Roles.Consumer)]
         [ProducesResponseType(typeof(PaginatedList<StarResponse>), StatusCodes.Status200OK)]
         public async Task<ActionResult<PaginatedList<StarResponse>>> Get([FromQuery] GetStarRequest request)
         {
@@ -42,6 +46,8 @@ namespace CosmicApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.DefaultScheme,
+            Roles = Roles.Consumer)]
         [ProducesResponseType(typeof(StarResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StarResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetStarById(Guid id)
@@ -56,7 +62,8 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = Roles.Admin)]
         public async Task<ActionResult> Create([FromBody] CreateStarRequest request)
         {
             return CreatedAtAction(nameof(GetStarById), await _mediator.Send(request));
@@ -70,6 +77,8 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("{id}/pictures")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.DefaultScheme,
+            Roles = Roles.Consumer)]
         [ProducesResponseType(typeof(PaginatedList<PictureResponse>), StatusCodes.Status200OK)]
         public async Task<ActionResult> Pictures([FromRoute] Guid id, [FromQuery] GetPicturesRequest request)
         {

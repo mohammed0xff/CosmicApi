@@ -1,12 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CosmicApi.Application.Common.Responses;
 using CosmicApi.Application.Features.Galaxies;
 using CosmicApi.Application.Features.Galaxies.CreateGalaxy;
 using CosmicApi.Application.Features.Pictures;
 using CosmicApi.Application.Features.Pictures.GetPictures;
-using Microsoft.AspNetCore.Authorization;
 using CosmicApi.Domain.Constants;
+using CosmicApi.Configurations.Authentication.ApiKey;
 
 namespace CosmicApi.Controllers
 {
@@ -29,6 +31,8 @@ namespace CosmicApi.Controllers
         /// <param name="GetGalaxyRequest"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.DefaultScheme,
+            Roles = Roles.Consumer)]
         public async Task<ActionResult<PaginatedList<GalaxyResponse>>> Get([FromQuery] GetGalaxyRequest request)
         {
             return Ok(await _mediator.Send(request));
@@ -40,6 +44,8 @@ namespace CosmicApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.DefaultScheme,
+            Roles = Roles.Consumer)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetGalaxyById([FromRoute] Guid id)
@@ -67,7 +73,9 @@ namespace CosmicApi.Controllers
         /// <param name="request"></param>
         /// <returns>201 Created</returns>
         [HttpPost]
-        [Authorize(Roles =Roles.Admin)]
+        // [Authorize(Roles =Roles.Admin)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, 
+            Roles = Roles.Admin)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status201Created)]
         public async Task<ActionResult> Create([FromBody] CreateGalaxyRequest request)
         {
@@ -80,7 +88,8 @@ namespace CosmicApi.Controllers
         /// <param name="DeleteGalaxyRequest"></param>
         /// <returns>NoContent</returns>
         [HttpDelete]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = Roles.Admin)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Delete([FromBody] DeleteGalaxyRequest request)
@@ -94,7 +103,8 @@ namespace CosmicApi.Controllers
         /// <param name="UpdateGalaxyRequest"></param>
         /// <returns>CreatedAtAction</returns>
         [HttpPut]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = Roles.Admin)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GalaxyResponse), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Update([FromBody] UpdateGalaxyRequest request)
