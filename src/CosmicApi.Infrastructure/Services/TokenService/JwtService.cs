@@ -27,8 +27,8 @@ namespace CosmicApi.Infrastructure.Services.TokenService
             _tokenValidationParams = tokenValidationParams;
             _context = context;
         }
-
-        public async Task<Jwt> GenerateAccessToken(User user)
+ 
+        public async Task<RefreshTokenResponse> GenerateAccessToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_tokenConfiguration.Secret);
@@ -63,7 +63,7 @@ namespace CosmicApi.Infrastructure.Services.TokenService
             {
                 UserId = user.Id,
                 AddedDate = DateTime.UtcNow,
-                ExpiryDate = DateTime.UtcNow.AddMonths(6),
+                ExpiryDate = DateTime.UtcNow.AddDays(6),
                 Token = RandomString(35) + Guid.NewGuid()
             };
 
@@ -71,7 +71,7 @@ namespace CosmicApi.Infrastructure.Services.TokenService
             await _context.Tokens.AddAsync(refreshToken);
             await _context.SaveChangesAsync();
 
-            return new Jwt
+            return new RefreshTokenResponse
             {
                 Token = tokenHandler.WriteToken(token),
                 ExpDate = expiryDate,
@@ -79,24 +79,28 @@ namespace CosmicApi.Infrastructure.Services.TokenService
             };
         }
 
-
-        public async Task<Result<Jwt>> GenerateRefreshToken(string token)
+        public async Task<Result<RefreshTokenResponse>> RefreshToken(string token, string refreshToken)
         {
-            var jwtTokenHandler = new JwtSecurityTokenHandler();
             try
             {
                 // token existence validation
                 var storedToken = await _context.Tokens
-                    .FirstOrDefaultAsync(x => x.Token == token);
+                    .FirstOrDefaultAsync(x => x.Token == refreshToken);
 
                 if (storedToken == null)
                 {
-                    return Result.Error("Token does not exist");
+                    return Result.Error("Refresh Token does not exist");
                 }
 
                 if(storedToken.ExpiryDate < DateTime.UtcNow)
                 {
-                    return Result.Error("Token have expired already.");
+                    return Result.Error("Refresh Token Expired, Please log in.");
+                }
+
+                // check access token ..
+                if (!IsValidToken(token))
+                {
+                    return Result.Error("Not a Vaid Token.");
                 }
 
                 // update current token 
@@ -107,7 +111,7 @@ namespace CosmicApi.Infrastructure.Services.TokenService
                 var user = await _context.Users
                     .FirstOrDefaultAsync(x => x.Id == storedToken.UserId);
                 if (user == null)
-                    throw new ArgumentNullException($"User with Id {storedToken.UserId} has been deleted.");
+                    return Result.Error($"User with Id {storedToken.UserId} has been deleted.");
                 
                 return Result.Success(await GenerateAccessToken(user));
             }
@@ -117,7 +121,7 @@ namespace CosmicApi.Infrastructure.Services.TokenService
             }
         }
 
-        private string RandomString(int length)
+        private static string RandomString(int length)
         {
             var random = new Random();
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -129,6 +133,34 @@ namespace CosmicApi.Infrastructure.Services.TokenService
                 );
         }
 
-    }
+        private bool IsValidToken(string token)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            // Validation JWT token format
+            _tokenValidationParams.ValidateLifetime = false;
+            var tokenInVerification = jwtTokenHandler
+                .ValidateToken(
+                    token, 
+                    _tokenValidationParams, 
+                    out var validatedToken
+                );
+            _tokenValidationParams.ValidateLifetime = true;
 
+            // Validate encryption alg
+            if (validatedToken is JwtSecurityToken jwtSecurityToken)
+            {
+                var result = jwtSecurityToken.Header.Alg
+                    .Equals(
+                        _tokenConfiguration.Algorithm, 
+                        StringComparison.InvariantCultureIgnoreCase
+                    );
+                if (result == false) return false;
+            }
+            else { 
+                return false; 
+            }
+
+            return true;
+        }
+    }
 }
