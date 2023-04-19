@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
+using CosmicApi.Configurations.Authentication.ApiKey;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 
@@ -22,12 +22,12 @@ namespace CosmicApi.Configurations
                         Contact = new OpenApiContact
                         {
                             Name = "mohammed0xff",
-                            //Url = new Uri("")
+                            Url = new Uri("https://github.com/mohammed0xff")
                         },
                         License = new OpenApiLicense
                         {
                             Name = "MIT",
-                            //Url = new Uri("")
+                            Url = new Uri("https://github.com/mohammed0xff/CosmicApi/blob/master/LICENSE.txt")
                         }
                     });
 
@@ -54,22 +54,39 @@ namespace CosmicApi.Configurations
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
                 };
-                options.AddSecurityDefinition("jwt_auth", securityDefinition);
+                options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityDefinition);
 
                 // Make sure swagger UI requires a Bearer token specified
-                OpenApiSecurityScheme securityScheme = new OpenApiSecurityScheme()
+                OpenApiSecurityScheme JwtScheme = new OpenApiSecurityScheme()
                 {
                     Reference = new OpenApiReference()
                     {
-                        Id = "jwt_auth",
+                        Id = JwtBearerDefaults.AuthenticationScheme,
                         Type = ReferenceType.SecurityScheme
                     }
                 };
+
+                OpenApiSecurityScheme apiKeyScheme = new()
+                {
+                    Name = "X-Api-Key",
+                    Scheme = ApiKeyAuthenticationOptions.DefaultScheme,
+                    Description = "Api key needed to access the endpoints. X-Api-Key: My_API_Key",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Reference = new()
+                    {
+                        Id = "X-Api-Key",
+                        Type = ReferenceType.SecurityScheme,
+                    }
+                };
+                options.AddSecurityDefinition(ApiKeyAuthenticationOptions.ApiKeyHeaderName, apiKeyScheme);
+
+
                 OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
                 {
-                    {securityScheme, new string[] { }},
+                    {JwtScheme, new string[] { }}, {apiKeyScheme, new string[] { }},
                 };
-                options.AddSecurityRequirement(securityRequirements);            
+                options.AddSecurityRequirement(securityRequirements);
             });
 
             return services;
