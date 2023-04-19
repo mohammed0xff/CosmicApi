@@ -5,51 +5,37 @@ namespace CosmicApi.Application.Extensions
 {
     public static class ResultExtensions
     {
-        public static IActionResult? ToActionResult(this Result result)
-        {
-            if (result == null) return new BadRequestResult();
-            return result.IsSuccess ? 
-                new OkObjectResult(result) : result.ToHttpNonSuccessResult();
-        }
-
         public static IActionResult? ToActionResult<T>(this Result<T> result)
         {
             if (result == null) return new BadRequestResult();
-            return result.IsSuccess ?
-                new OkObjectResult(result.Value) : result.ToHttpNonSuccessResult();
-        }
 
-        private static IActionResult ToHttpNonSuccessResult(this IResult result)
-        {
-            var errors = result.Errors.ToList();
-            var objectResult = new ObjectResult(errors);
             switch (result.Status)
             {
+                case ResultStatus.Ok:
+                    return new OkObjectResult(result.Value);
+
                 case ResultStatus.Error:
+                    var errors = result.Errors.ToList();
+                    var objectResult = new ObjectResult(errors);
                     objectResult.StatusCode = 400;
-                    break;
+                    return objectResult;
 
                 case ResultStatus.Invalid:
-                    var ValidtionErrors = result.ValidationErrors.ToList();
-                    List<string> ValidtionErrorsStrings = new ();
-                    foreach ( var error in ValidtionErrors )
-                        ValidtionErrorsStrings.Add(error.ErrorMessage);
-                    return new BadRequestObjectResult(ValidtionErrorsStrings);
-                
+                    return new BadRequestObjectResult(result.ValidationErrors);
+
                 case ResultStatus.NotFound:
-                    return new NotFoundObjectResult(errors);
-                
+                    return new NotFoundResult();
+
                 case ResultStatus.Unauthorized:
-                    return new UnauthorizedObjectResult(errors);
-                
+                    return new UnauthorizedResult();
+
                 case ResultStatus.Forbidden:
-                    return new ObjectResult(errors) { StatusCode = 403 };
-                
+                    return new ForbidResult();
+
                 default:
-                    break;
+                    return new StatusCodeResult(500);
             }
 
-            return objectResult;
         }
     }
 }
