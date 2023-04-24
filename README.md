@@ -41,8 +41,10 @@ This will start the application as well as sql-server database.
 to access swagger.
 
 ## Testing
-an access token is required to access authorized endpoints
-to obtain one you can log in with : 
-* Email : `user1@gmail.com` Password : `unique-password`
-* Email : `admin1@gmail.com` Password : `unique-password`
+#### An access token is required to access authorized endpoints that modify the data.
+ - to obtain one you can log in with : 
+  Email : `admin1@gmail.com` Password : `unique-password`
+
+#### An ApiKey is required to consume and retrieve the data.
+ - add `X-Api-Key` header key with value ``` 31E197D4-2912-44E6-B210-4077C7A66738 ``` to your request headers to use in memory api keys.
 
