@@ -46,5 +46,5 @@ to access swagger.
   Email : `admin1@gmail.com` Password : `unique-password`
 
 #### An ApiKey is required to consume and retrieve the data.
- - add `X-Api-Key` header key with value ``` 31E197D4-2912-44E6-B210-4077C7A66738 ``` to your request headers to use in memory api keys.
+ - add `X-Api-Key` header key with value ``` 31E197D4-2912-44E6-B210-4077C7A66738 ``` to your request headers.
 
