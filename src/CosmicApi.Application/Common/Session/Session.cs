@@ -1,29 +1,48 @@
-﻿using CosmicApi.Domain.Constants;
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using CosmicApi.Domain.Constants;
 
 namespace CosmicApi.Application.Common.Session
 {
     public class Session : ISession
     {
-        public DateTime Now => DateTime.Now;
-        public Guid UserId { get; } 
-        public string Username { get; } = null!;
-        public string Email { get; set; }
-        public bool IsAuthenticated { get; } = false;
-        public bool IsAdmin { get; } = false;
+        private readonly ClaimsPrincipal _user;
 
-        public Session(IHttpContextAccessor httpContextAccessor)
+        public DateTime Now => DateTime.Now;
+        public Guid UserId { get; }
+        public string Username { get; }
+        public string Email { get; }
+        public bool IsAuthenticated { get; }
+        public bool IsAdmin { get; }
+
+        public Session(ClaimsPrincipal user)
         {
-            var user = httpContextAccessor.HttpContext?.User;
-            IsAuthenticated = user.Identity.IsAuthenticated;
+            _user = user ?? throw new ArgumentNullException(nameof(user));
+
+            IsAuthenticated = _user.Identity?.IsAuthenticated ?? false;
+
             if (IsAuthenticated)
             {
-                UserId = Guid.Parse(user.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value);
-                Email = user.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
-                Username = user.Claims.Where(x => x.Type == "username").FirstOrDefault()?.Value;
-                IsAdmin = user.IsInRole(Roles.Admin);
+                UserId = GetUserId();
+                Email = GetClaimValue(ClaimTypes.Email);
+                Username = GetClaimValue("username");
+                IsAdmin = _user.IsInRole(Roles.Admin);
             }
+        }
+
+        private Guid GetUserId()
+        {
+            var userIdClaim = _user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out Guid userId))
+            {
+                throw new InvalidOperationException($"Could not get user ID from claim {ClaimTypes.NameIdentifier}.");
+            }
+
+            return userId;
+        }
+
+        private string GetClaimValue(string claimType)
+        {
+            return _user.Claims.FirstOrDefault(c => c.Type == claimType)?.Value;
         }
     }
 }
