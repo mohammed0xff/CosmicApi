@@ -2,6 +2,7 @@
 using CosmicApi.Configurations.Authentication.ApiKey;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using ISession = CosmicApi.Application.Common.Session.ISession;
 
 namespace CosmicApi.Configurations
@@ -11,6 +12,9 @@ namespace CosmicApi.Configurations
         public static IServiceCollection ConfigureAuthorization(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<ISession, Session>();
+            services.AddScoped<ClaimsPrincipal>(
+                sp => sp.GetService<IHttpContextAccessor>().HttpContext.User
+                );
             services.AddAuthorization(options =>
             {
                 var onlyJwtBearerSchemePolicyBuilder = 
